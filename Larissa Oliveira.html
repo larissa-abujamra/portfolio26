@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Larissa Oliveira</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #f0ebe0;
+      --ink: #16120c;
+      --accent: oklch(52% 0.16 240);
+      --accent2: oklch(52% 0.14 200);
+      --muted: oklch(48% 0.04 55);
+      --surface: #e6e0d6;
+      --surface2: #ddd7cc;
+      --border: rgba(22,18,12,0.1);
+      --font-d: 'Clash Display', sans-serif;
+      --font-s: 'DM Serif Display', serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-d);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease, background 0.5s ease;
+    }
+    .nav.visible {
+      opacity: 1; pointer-events: all;
+      background: rgba(240,235,224,0.85);
+      backdrop-filter: blur(12px);
+    }
+    .nav-name { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 80px 48px 60px;
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, oklch(88% 0.06 240) 0%, var(--bg) 65%);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-s); font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.4rem);
+      color: var(--muted); letter-spacing: 0.04em;
+      margin-bottom: 12px; text-align: center;
+      opacity: 0; animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.3s;
+    }
+    .hero-title-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      cursor: default; user-select: none;
+    }
+    .hero-line {
+      display: flex; align-items: flex-end;
+      line-height: 0.88;
+    }
+    .hero-line-my {
+      font-family: var(--font-d); font-weight: 700;
+      font-size: clamp(80px, 18vw, 260px);
+      letter-spacing: -0.03em;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+      animation-delay: 0.5s;
+    }
+    .hero-line-portfolio {
+      font-family: var(--font-d); font-weight: 700;
+      font-size: clamp(60px, 13.5vw, 200px);
+      letter-spacing: -0.02em;
+      opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+      animation-delay: 0.65s;
+    }
+    .anim-letter {
+      display: inline-block;
+      transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), color 0.05s ease;
+      transform-origin: bottom center;
+      will-change: transform, color;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 36px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      opacity: 0; animation: fadeIn 1s ease forwards; animation-delay: 1.4s;
+    }
+    .hero-scroll span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    .hero-end-spacer {
+      min-height: clamp(100px, 24vh, 300px);
+      background: var(--bg);
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto {
+      padding: 120px 48px;
+      max-width: 1100px; margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .manifesto-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
+    .manifesto-text {
+      font-family: var(--font-s);
+      font-size: clamp(calc(2rem - 3px), calc(4.5vw - 3px), calc(5.2rem - 3px));
+      line-height: 1.15; letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .manifesto-text em { font-style: normal; color: var(--accent); }
+    .manifesto-text br + br { display: none; }
+    .manifesto-text .quiet { color: var(--muted); }
+    .disciplines {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin-top: 56px;
+    }
+    .discipline-tag {
+      border: 1.5px solid var(--border); border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+      color: var(--muted);
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+    }
+    .discipline-tag:hover { border-color: var(--accent); color: var(--accent); background: oklch(96% 0.04 28); }
+
+    /* ── TICKER ── */
+    .ticker { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .ticker-track { display: flex; width: max-content; animation: ticker 28s linear infinite; }
+    .ticker-item { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); white-space: nowrap; padding: 0 40px; }
+    .ticker-dot { color: var(--accent); }
+
+    /* ── SECTION HEADER ── */
+    .section-header { padding: 80px 48px 40px; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: baseline; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .section-count { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); }
+
+    /* ── PROJECTS GRID ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 48px 80px; max-width: 1200px; margin: 0 auto; }
+    .project-card {
+      background: var(--surface); cursor: pointer; overflow: hidden;
+      border-radius: 4px;
+      transition: transform 0.35s cubic-bezier(0.34,1,0.64,1), box-shadow 0.35s ease;
+    }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(22,18,12,0.12); }
+    .project-card-img {
+      width: 100%; aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .project-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .project-card:hover .project-card-img img { transform: scale(1.04); }
+    .project-card-logo { width: 100%; height: 100%; object-fit: contain; }
+    .project-card-body { padding: 20px 24px 24px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .project-card-title { font-size: 1rem; font-weight: 600; letter-spacing: 0.04em; }
+    .project-card-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+    .pill {
+      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+      padding: 4px 10px; border-radius: 100px;
+      background: var(--surface2); color: var(--muted);
+    }
+    .pill-accent { background: oklch(94% 0.06 28); color: var(--accent); }
+    .card-reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .card-reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── CREATIVE GRID ── */
+    .creative-grid { columns: 3; gap: 4px; padding: 0 48px 80px; max-width: 1200px; margin: 0 auto; }
+    .creative-item { break-inside: avoid; margin-bottom: 4px; position: relative; overflow: hidden; cursor: pointer; border-radius: 4px; }
+    .creative-item img, .creative-item video { width: 100%; display: block; transition: transform 0.5s ease; }
+    .creative-item:hover img, .creative-item:hover video { transform: scale(1.04); }
+    .creative-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(22,18,12,0.7) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.3s ease;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
+    }
+    .creative-item:hover .creative-item-overlay { opacity: 1; }
+    .creative-item-title { color: #f0ebe0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .creative-item-desc { color: rgba(240,235,224,0.7); font-size: 0.65rem; margin-top: 4px; }
+
+    /* ── ABOUT SECTION ── */
+    .about-section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 48px; }
+    .about-bio { font-family: var(--font-s); font-size: clamp(1.1rem, 2vw, 1.7rem); line-height: 1.5; color: var(--ink); }
+    .about-bio em { font-style: italic; color: var(--accent); }
+    .about-bio p + p { margin-top: 1em; }
+    .about-detail-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .chip-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .chip {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px; background: var(--surface); border-radius: 8px;
+    }
+    .chip-logo { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; }
+    .chip-title { font-size: 0.82rem; font-weight: 600; }
+    .chip-sub { font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── SPORTS ── */
+    .sports-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 20px 0; border-radius: 8px; overflow: hidden; }
+    .sports-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .sports-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .sports-bullets li { font-size: 0.78rem; color: var(--muted); list-style: none; padding-left: 14px; position: relative; line-height: 1.5; }
+    .sports-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+
+    /* ── BOOKS ── */
+    .books-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 16px 0; scrollbar-width: none; }
+    .books-scroll::-webkit-scrollbar { display: none; }
+    .books-scroll img { height: 160px; width: auto; border-radius: 4px; flex-shrink: 0; transition: transform 0.3s; }
+    .books-scroll img:hover { transform: scale(1.08) translateY(-4px); }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 48px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .footer-name { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
+    .footer-links { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .footer-links a { font-size: 0.75rem; color: var(--muted); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--ink); }
+    .footer-copy { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 12px; }
+
+    /* ── OVERLAY ── */
+    .overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: var(--bg);
+      transform: translateY(100%);
+      transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
+      display: flex; flex-direction: column;
+    }
+    .overlay.open { transform: translateY(0); }
+    .overlay-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px; border-bottom: 1px solid var(--border);
+      background: var(--bg); flex-shrink: 0;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .overlay-back {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+      background: none; border: none; cursor: pointer; color: var(--ink);
+      transition: color 0.2s;
+    }
+    .overlay-back:hover { color: var(--accent); }
+    .overlay-back svg { transition: transform 0.2s; }
+    .overlay-back:hover svg { transform: translateX(-3px); }
+    .overlay-scroll { flex: 1; overflow-y: auto; }
+    .overlay-hero { padding: 64px 48px 48px; border-bottom: 1px solid var(--border); }
+    .overlay-title { font-size: clamp(2rem, 6vw, 5rem); font-weight: 700; letter-spacing: -0.02em; }
+    .overlay-meta { display: flex; gap: 40px; margin-top: 24px; }
+    .overlay-meta-item label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+    .overlay-meta-item span { font-size: 0.82rem; font-weight: 500; }
+    .proj-section { padding: 64px 48px; border-bottom: 1px solid var(--border); max-width: 900px; }
+    .proj-section:nth-child(even) { background: var(--surface); max-width: none; padding: 64px calc(50% - 450px + 48px); }
+    .proj-heading { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+    .proj-body { font-family: var(--font-s); font-size: clamp(1rem, 1.8vw, 1.4rem); line-height: 1.6; color: var(--ink); }
+    .proj-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 28px; }
+    .proj-gallery img { width: 100%; border-radius: 4px; object-fit: cover; }
+    .proj-gallery--single img { grid-column: 1 / -1; }
+    .proj-feature-img { width: 100%; border-radius: 8px; margin-top: 28px; overflow: hidden; }
+    .proj-feature-img img { width: 100%; }
+    .proj-side { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .proj-side img { width: 100%; border-radius: 8px; }
+    .news-snippet { margin-top: 20px; padding: 16px; background: var(--surface); border-radius: 8px; border-left: 3px solid var(--accent); }
+    .news-source { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+    .news-headline { font-size: 0.85rem; font-weight: 600; margin: 6px 0; line-height: 1.4; }
+    .news-link { font-size: 0.72rem; color: var(--accent); text-decoration: underline; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(22,18,12,0.92);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 48px;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img, .lightbox video { max-width: 90vw; max-height: 85vh; border-radius: 4px; object-fit: contain; }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 32px;
+      background: none; border: none; cursor: pointer;
+      font-size: 1.5rem; color: #f0ebe0; opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-caption { position: absolute; bottom: 32px; left: 0; right: 0; text-align: center; color: rgba(240,235,224,0.7); font-size: 0.75rem; letter-spacing: 0.08em; }
+
+    /* ── FEATURED CAROUSEL ── */
+    .featured-wrap { padding: 0 48px 0; max-width: 1200px; margin: 0 auto; }
+    .featured-slide { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; min-height: 380px; }
+    .featured-slide-info { animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both; }
+    .featured-num { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 16px; }
+    .featured-title { font-size: clamp(2.8rem, 5.5vw, 4.5rem); font-weight: 700; letter-spacing: -0.025em; line-height: 0.95; margin-bottom: 14px; }
+    .featured-sub { font-family: var(--font-s); font-style: italic; font-size: 1.05rem; color: var(--muted); margin-bottom: 24px; }
+    .featured-desc { font-size: 0.88rem; line-height: 1.75; color: var(--muted); max-width: 420px; }
+    .featured-visual {
+      border-radius: 12px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; animation: fadeIn 0.45s ease both; position: relative;
+      box-shadow: 0 10px 36px rgba(22, 18, 12, 0.1), 0 2px 8px rgba(22, 18, 12, 0.06);
+    }
+    .featured-visual--square { border-radius: 0; }
+    .featured-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    /* HIRO + FAÇA PARTE: no card panel — image sits on page bg; shadow is on the img only */
+    .featured-visual--contain {
+      border-radius: 0;
+      box-shadow: none;
+      overflow: visible;
+      background: transparent;
+      aspect-ratio: 16/10;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .featured-visual--contain img {
+      position: static; inset: auto; max-width: 100%; max-height: 100%; width: auto; height: auto;
+      object-fit: contain; object-position: center; display: block; border-radius: 0;
+      box-shadow: 0 10px 36px rgba(22, 18, 12, 0.1), 0 2px 8px rgba(22, 18, 12, 0.06);
+    }
+    .featured-visual-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .featured-placeholder-text { font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; opacity: 0.08; letter-spacing: -0.04em; }
+    .featured-tabs { display: flex; gap: 3px; margin-top: 36px; }
+    .featured-tab {
+      flex: 1; padding: 16px 18px; background: var(--surface); border: none; cursor: pointer;
+      text-align: left; border-radius: 6px; position: relative; overflow: hidden;
+      transition: opacity 0.3s, background 0.3s;
+    }
+    .featured-tab.active { background: var(--surface2); }
+    .featured-tab:not(.active) { opacity: 0.52; }
+    .featured-tab-name { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; }
+    .featured-tab-sub { font-size: 0.6rem; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; }
+    .featured-tab-bar { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--accent); transition: none; }
+    .featured-cta { display: flex; gap: 14px; padding: 56px 48px 80px; max-width: 1200px; margin: 0 auto; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 100px; font-family: var(--font-d);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; border: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(22,18,12,0.12); }
+    .cta-btn-primary { background: var(--ink); color: var(--bg); }
+    .cta-btn-secondary { background: var(--surface2); color: var(--ink); }
+    @media (max-width: 768px) {
+      .featured-slide { grid-template-columns: 1fr; gap: 32px; }
+      .featured-wrap, .featured-cta { padding-left: 24px; padding-right: 24px; }
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes scrollPulse { 0%, 100% { opacity: 0.4; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.2); } }
+
+    @media (max-width: 768px) {
+      .nav { padding: 16px 24px; }
+      .hero { padding: 80px 24px 60px; }
+      .projects-grid { grid-template-columns: 1fr; padding: 0 24px 60px; }
+      .creative-grid { columns: 2; padding: 0 24px 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-section, .manifesto, .section-header, .footer { padding-left: 24px; padding-right: 24px; }
+      .sports-grid { grid-template-columns: repeat(2, 1fr); }
+      .proj-side { grid-template-columns: 1fr; }
+      .overlay-hero, .overlay-nav { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
+
+    // ─── Data ──────────────────────────────────────────────────────────────────
+    const PROJECTS = [
+      {
+        id: 'hiro', title: 'HIRO',
+        tags: ['full-stack', 'ui/ux', 'health tech'],
+        cardImg: 'imgs/hiro.png', cardBg: '#dde5ed',
+        timeline: '2025 – Present', role: 'Full-Stack · Product & Customer Discovery',
+        sections: [
+          { type: 'text', heading: 'Overview', body: 'An AI-powered clinical decision support tool designed to help healthcare providers navigate complex patient cases with greater speed and confidence. HIRO brings appointment context, patient history, and next steps into one focused workflow built for high-stakes clinical settings.' },
+          { type: 'text-images', heading: 'Interface', body: "Dashboard and consultation flows designed for clarity under time pressure, with a calm visual language that keeps attention on the patient and the work at hand.", images: ['imgs/hiro.png'] }
+        ]
+      },
+      {
+        id: 'faca-parte', title: 'FAÇA PARTE',
+        tags: ['social impact', 'non-profit'],
+        cardImg: 'imgs/facalogo.png', cardBg: '#ede5d8',
+        logoMode: true,
+        timeline: 'Mar 2022 – Jan 2025', role: 'Co-founder & President',
+        sections: [
+          { type: 'text', heading: 'The Idea', body: "After seeing my grandmother struggle to navigate the digital world, unable to perform simple tasks on her phone that my generation takes for granted, I decided to take action. Week after week, I found myself fixing her technology issues, but I wasn't truly teaching her how to solve them independently. That's when the idea for Faça Parte was born: an organization dedicated to offering technology workshops for older adults, led by teenage volunteers." },
+          { type: 'text-images', heading: 'The Early Stages', body: "I started small, inviting my grandparents and my friends' grandparents to weekend sessions at my house or at school. What began as a few informal gatherings quickly grew. Soon, grandparents of students I didn't even know were expressing interest. It became clear that this wasn't just my grandmother's challenge — it was a widespread generational gap.", images: ['imgs/evento.png', 'imgs/fp.png'] },
+          { type: 'text-images', heading: 'Expansion & Growth', body: "We developed partnerships with external organizations and NGOs to broaden our reach, including Instituto Velho Amigo, a nonprofit dedicated to the well-being of older adults, and Clube Paineiras do Morumby, a country club in São Paulo where we ran workshops for members and the local community.", images: ['imgs/va.png', 'imgs/cpm.png'] },
+          { type: 'text-images', heading: 'Corporate Partnerships', body: "We partnered with companies like SAP for their 'Bring Your Parents to Work' day, hosting a dedicated Faça Parte technology workshop at their São Paulo office and reaching new audiences through corporate social responsibility initiatives.", images: ['imgs/corp.png', 'imgs/sap.png'] },
+          { type: 'side', heading: 'Finalist, SXSW EDU Student Impact Challenge', body: "Selected to pitch at one of the biggest stages for technology and impact innovation in the world. We were the only non-American team selected, making the experience even more special.", image: 'imgs/sxsw.png', news: { source: 'ESTADÃO', headline: 'Brazilian students are among the finalists at the world\'s largest innovation event: SXSW EDU!', link: 'https://www.soseducacao.com.br/post/tem-brasil-no-p%C3%B3dio-estudantes-brasileiros-entre-os-finalistas-no-maior-evento-de-inova%C3%A7%C3%A3o-do-mundo' } },
+          { type: 'text-images', heading: 'Brazilian Internet Congress', body: "Invited to speak at the 'Technologies for Social Transformation' panel. It was a privilege to learn more about the initiatives of the other panelists, who are using technology to drive solutions for a better and more equitable Brazil.", images: ['imgs/mic.png', 'imgs/congresso.png'] }
+        ]
+      },
+      {
+        id: 'gait', title: 'GAIT',
+        tags: ['healthtech', 'product design'],
+        cardImg: 'imgs/gait.png', cardBg: '#dfe8e4',
+        timeline: 'Nov 2025 – Present', role: 'Co-founder · Product & GTM',
+        sections: [
+          { type: 'text', heading: 'The Idea', body: "Gait was developed during a one-semester startup incubator at the University of Southern California, where our team won the Audience Choice Award at Demo Day. The idea emerged after discovering research showing strong correlations between changes in gait and early neurocognitive decline. Using computer vision and machine learning, Gait analyzes a person's walking pattern through simple smartphone video to detect subtle deviations that may signal early neurological or mobility-related decline." },
+          { type: 'text-images', heading: 'The Technology', body: "Gait uses computer vision and machine learning to analyze walking patterns through standard smartphone or camera video. By leveraging pose estimation and time-series modeling, the system tracks metrics such as stride length, variability, and balance, comparing them against an individual's baseline over time.", images: ['imgs/gait.png'] },
+          { type: 'text-images', heading: 'The Impact', body: "Our long-term vision is to shift healthcare from reactive intervention to proactive monitoring. By detecting subtle deviations in gait earlier, Gait has the potential to provide families, caregivers, and clinicians with meaningful insights before severe symptoms emerge.", images: ['imgs/demo.png', 'imgs/demo2.png'] }
+        ]
+      },
+      {
+        id: 'rumo', title: 'RUMO',
+        tags: ['edtech', 'product'],
+        cardImg: 'imgs/rumo.png', cardBg: '#e8e4df',
+        timeline: 'Sep 2025 – Nov 2025', role: 'Co-founder · Product & GTM',
+        externalUrl: 'https://findrumo.com',
+        sections: [
+          { type: 'text', heading: 'The Idea', body: 'As an international student from Brazil, I experienced firsthand how overwhelming and fragmented the U.S. college application process can be. Through customer discovery calls with students and counselors, I learned exactly where the bottlenecks and pain points are. Meet Rumo — an AI-powered platform that consolidates timelines, essays, and college research into one intuitive space.' },
+          { type: 'feature', heading: 'Personalized Onboarding', body: "Streamlined, adaptive onboarding flow. Intakes students' interests, goals, and academic background.", image: 'imgs/rumo1.png' },
+          { type: 'feature', heading: 'AI-Generated Roadmap', body: 'Leveraging AI to deconstruct complex application cycles into manageable milestones.', image: 'imgs/rumo2.png' },
+          { type: 'feature', heading: 'Smart College Search', body: 'Dynamic college and program discovery engine that helps students identify aligned academic pathways.', image: 'imgs/rumo3.png' },
+          { type: 'feature', heading: 'Essay Prompts', body: 'Pulls real-time essay prompts, word count and other application requirements through web scraping + Gemini API.', image: 'imgs/rumo4.png' }
+        ]
+      },
+      {
+        id: 'brasa', title: 'BRASA WEBPAGE',
+        tags: ['UI/UX', 'web dev'],
+        cardImg: 'imgs/brasaweb.png', cardBg: '#e0e4ea',
+        externalUrl: 'https://brasausc.com',
+        timeline: '2025 – Present', role: 'Web Developer · UI/UX',
+        sections: [
+          { type: 'text', heading: 'Overview', body: "Designed and coded BRASA USC's webpage using HTML/CSS/JavaScript, improving accessibility and centralizing communication for 100+ members. The project involved full UI design from scratch, with a focus on clarity, mobile responsiveness, and representing the energy of a vibrant Brazilian student community at USC." }
+        ]
+      }
+    ];
+
+    const CREATIVE = [
+      { title: 'Oil Painting', desc: 'Black & white painting inspired by the Barra do Sahy 2024 landslides', media: 'imgs/boy.png', type: 'img' },
+      { title: 'Robotic Turtle', desc: 'Made with 3D printer, lego pieces, servo motors and clay', media: 'imgs/TURTLE.mp4', type: 'video' },
+      { title: 'Acrylic Painting', desc: '"State of Mind"', media: 'imgs/paint.png', type: 'img' },
+      { title: 'Charcoal', desc: 'Self-portrait — upside down', media: 'imgs/me.png', type: 'img', tall: true }
+    ];
+
+    const EXPERIENCE = [
+      { logo: 'imgs/microsoft.png', name: 'Microsoft', role: 'Startup Scout', period: 'Jan 2026 – Present' },
+      { logo: 'imgs/jbs.png', name: 'JBS', role: 'M&A and DCM Summer Intern', period: 'Jun 2025 – Aug 2025' }
+    ];
+
+    const LEADERSHIP = [
+      { logo: 'imgs/sep.png', name: 'SEP at USC', role: 'Active Member', period: 'Aug 2025 – Present' },
+      { logo: 'imgs/gero.png', name: 'GeroTech SC', role: 'President', period: 'Nov 2024 – Present' },
+      { logo: 'imgs/brasa.png', name: 'BRASA USC', role: 'Marketing Manager', period: 'Aug 2025 – Present' },
+      { logo: 'imgs/fof.png', name: 'Fight On Founders', role: 'Advisor & E-board Member', period: 'Nov 2024 – Present' }
+    ];
+
+    const BOOKS = ['imgs/atomic.png','imgs/gone.png','imgs/murakami.png','imgs/littlebook.png','imgs/silent.png','imgs/carrie.png','imgs/thehate.png','imgs/mebefore.png','imgs/mindset.png','imgs/middle.jpg','imgs/crawdads.png','imgs/daisy.jpg','imgs/np.png','imgs/turt.jpg','imgs/evelyn.jpg'];
+
+    const TICKER_ITEMS = ['Technology','Design','Business','Innovation','Impact','USC','São Paulo','LA','Startups','Social Impact','Health Tech','Ed Tech'];
+
+    const FEATURED = [
+      {
+        id: 'hiro', num: '01',
+        title: 'HIRO',
+        subtitle: 'AI Medical Tool',
+        tags: ['Full-Stack', 'UI/UX', 'Customer Discovery'],
+        desc: 'An AI-powered clinical decision support tool designed to help healthcare providers navigate complex patient cases with greater speed and confidence.',
+        visual: 'imgs/hiro.png', cardBg: 'var(--bg)', visualFit: 'contain',
+      },
+      {
+        id: 'faca-parte', num: '02',
+        title: 'FAÇA PARTE',
+        subtitle: 'Non-Profit & Education',
+        tags: ['business development', 'partnerships', 'social impact'],
+        desc: 'A nonprofit I co-founded that pairs teenage volunteers with older adults for hands-on technology workshops—growing from community sessions to partnerships with NGOs, schools, and companies including SAP.',
+        visual: 'imgs/facalogo.png', cardBg: '#ede5d8', visualFit: 'contain',
+      },
+      {
+        id: 'gait', num: '03',
+        title: 'GAIT',
+        subtitle: 'Health Technology',
+        tags: ['UI Design', 'Problem Discovery', 'Research'],
+        desc: 'Using computer vision and ML to analyze walking patterns through smartphone video, enabling proactive detection of early neurological decline.',
+        visual: 'imgs/gait.png', cardBg: '#dfe8e4',
+      },
+    ];
+
+    // ─── Hooks ─────────────────────────────────────────────────────────────────
+    function useReveal(threshold = 0.15, options = {}) {
+      const { rootMargin } = options;
+      const ref = useRef(null);
+      const [visible, setVisible] = useState(false);
+      useEffect(() => {
+        const obsConfig = { threshold };
+        if (rootMargin != null) obsConfig.rootMargin = rootMargin;
+        const obs = new IntersectionObserver(
+          ([e]) => { if (e.isIntersecting) setVisible(true); },
+          obsConfig
+        );
+        if (ref.current) obs.observe(ref.current);
+        return () => obs.disconnect();
+      }, [threshold, rootMargin]);
+      return [ref, visible];
+    }
+
+    // ─── Featured Work Carousel ────────────────────────────────────────────────
+    function FeaturedWork({ onOpenProject, onGoProjects, onGoCreative }) {
+      const [active, setActive] = useState(0);
+      const [progress, setProgress] = useState(0);
+      const rafRef = useRef(null);
+      const startRef = useRef(performance.now());
+      const activeRef = useRef(0);
+      const DURATION = 5000;
+
+      useEffect(() => {
+        activeRef.current = active;
+        startRef.current = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - startRef.current) / DURATION, 1);
+          setProgress(t * 100);
+          if (t >= 1) {
+            const next = (activeRef.current + 1) % FEATURED.length;
+            setActive(next);
+            return;
+          }
+          rafRef.current = requestAnimationFrame(tick);
+        };
+        rafRef.current = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(rafRef.current);
+      }, [active]);
+
+      const goTo = (i) => {
+        cancelAnimationFrame(rafRef.current);
+        setProgress(0);
+        setActive(i);
+      };
+
+      const openDetail = () => {
+        const project = PROJECTS.find(p => p.id === FEATURED[active].id);
+        if (project) onOpenProject(project);
+      };
+
+      const item = FEATURED[active];
+
+      return (
+        <section>
+          <div className="section-header">
+            <span className="section-label">Project highlights</span>
+          </div>
+          <div className="featured-wrap">
+            <div className="featured-slide">
+              <div className="featured-slide-info" key={`info-${active}`}>
+                <div className="featured-num">{item.num} / 0{FEATURED.length}</div>
+                <div className="featured-title">{item.title}</div>
+                <div className="featured-sub">{item.subtitle}</div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 22 }}>
+                  {item.tags.map(t => <span key={t} className="pill pill-accent">{t}</span>)}
+                </div>
+                <p className="featured-desc">{item.desc}</p>
+                <button onClick={openDetail} style={{ marginTop: 28, background: 'none', border: '1.5px solid var(--border)', borderRadius: 100, padding: '10px 22px', cursor: 'pointer', fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'var(--font-d)', fontWeight: 600, transition: 'border-color 0.2s, color 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'inherit'; }}
+                >
+                  View project →
+                </button>
+              </div>
+              <div
+                className={`featured-visual${item.visualFit === 'contain' ? ' featured-visual--contain' : ''}${item.id === 'gait' ? ' featured-visual--square' : ''}`}
+                style={{ background: item.visualFit === 'contain' ? 'transparent' : item.cardBg }}
+                key={`vis-${active}`}
+              >
+                {item.visual
+                  ? <img src={item.visual} alt={item.title} />
+                  : <div className="featured-visual-placeholder"><span className="featured-placeholder-text">{item.title}</span></div>
+                }
+              </div>
+            </div>
+            <div className="featured-tabs">
+              {FEATURED.map((f, i) => (
+                <button key={f.id} className={`featured-tab ${i === active ? 'active' : ''}`} onClick={() => goTo(i)}>
+                  <div className="featured-tab-name">{f.title}</div>
+                  <div className="featured-tab-sub">{f.subtitle}</div>
+                  <div className="featured-tab-bar" style={{ width: i === active ? `${progress}%` : '0%' }} />
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="featured-cta">
+            <button className="cta-btn cta-btn-primary" onClick={onGoProjects}>Projects →</button>
+            <button className="cta-btn cta-btn-secondary" onClick={onGoCreative}>Creative work →</button>
+          </div>
+        </section>
+      );
+    }
+
+    // ─── Letter Animation ───────────────────────────────────────────────────────
+    function AnimatedHero() {
+      const wrapRef = useRef(null);
+
+      const onMouseMove = useCallback((e) => {
+        const spans = wrapRef.current?.querySelectorAll('.anim-letter');
+        if (!spans) return;
+        spans.forEach(span => {
+          const r = span.getBoundingClientRect();
+          const dist = Math.hypot(e.clientX - (r.left + r.width/2), e.clientY - (r.top + r.height/2));
+          const t = Math.max(0, 1 - dist / 200);
+          const tColor = Math.min(1, t * 1.35);
+          span.style.transform = t > 0.02 ? `scale(${1 + t * 0.12})` : '';
+          span.style.color = t > 0.02 ? `oklch(52% ${tColor * 0.18} 240)` : '';
+        });
+      }, []);
+
+      const onMouseLeave = useCallback(() => {
+        const spans = wrapRef.current?.querySelectorAll('.anim-letter');
+        spans?.forEach(span => { span.style.transform = ''; span.style.color = ''; });
+      }, []);
+
+      return (
+        <section className="hero">
+          <p className="hero-eyebrow">welcome to</p>
+          <div ref={wrapRef} className="hero-title-wrap" onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
+            <div className="hero-line hero-line-my">
+              {'MY'.split('').map((ch, i) => <span key={i} className="anim-letter">{ch}</span>)}
+            </div>
+            <div className="hero-line hero-line-portfolio">
+              {'PORTFOLIO'.split('').map((ch, i) => <span key={i} className="anim-letter">{ch}</span>)}
+            </div>
+          </div>
+          <div className="hero-scroll">
+            <span>scroll</span>
+            <div className="scroll-line"></div>
+          </div>
+        </section>
+      );
+    }
+
+    // ─── Manifesto ──────────────────────────────────────────────────────────────
+    function ManifestoSection() {
+      const [ref, visible] = useReveal(0.18, { rootMargin: '0px 0px -12% 0px' });
+      return (
+        <section className="manifesto" ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(40px)', transition: 'opacity 1.25s ease, transform 1.25s cubic-bezier(0.16,1,0.3,1)' }}>
+          <div className="manifesto-label">About</div>
+          <p className="manifesto-text">
+            I was born and raised in Brazil and am currently based in Los Angeles. At USC's Iovine and Young Academy, I get to explore innovation at the intersection of <em>technology, design, and business.</em>
+          </p>
+          <div style={{ marginTop: 40 }}></div>
+        </section>
+      );
+    }
+
+    // ─── Ticker ─────────────────────────────────────────────────────────────────
+    function Ticker() {
+      const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
+      return (
+        <div className="ticker">
+          <div className="ticker-track">
+            {items.map((item, i) => (
+              <span key={i} className="ticker-item">{item}<span className="ticker-dot"> · </span></span>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Projects ───────────────────────────────────────────────────────────────
+    function ProjectCard({ project, onClick, delay }) {
+      const [ref, visible] = useReveal(0.1);
+      return (
+        <article
+          ref={ref}
+          className={`project-card card-reveal ${visible ? 'visible' : ''}`}
+          style={{ transitionDelay: `${delay}ms` }}
+          onClick={onClick}
+        >
+          <div className="project-card-img" style={{ background: project.cardBg }}>
+            {project.logoMode
+              ? <img src={project.cardImg} alt={project.title} className="project-card-logo" />
+              : <img src={project.cardImg} alt={project.title} />
+            }
+          </div>
+          <div className="project-card-body">
+            <div className="project-card-title">{project.title}</div>
+            <div className="project-card-tags">
+              {project.tags.map(t => <span key={t} className="pill">{t}</span>)}
+            </div>
+          </div>
+        </article>
+      );
+    }
+
+    function ProjectsSection({ onOpen }) {
+      return (
+        <section>
+          <div className="section-header">
+            <span className="section-label">Selected Work</span>
+            <span className="section-count">0{PROJECTS.length} Projects</span>
+          </div>
+          <div className="projects-grid">
+            {PROJECTS.map((p, i) => (
+              <ProjectCard key={p.id} project={p} onClick={() => onOpen(p)} delay={i * 80} />
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    // ─── Creative ────────────────────────────────────────────────────────────────
+    function CreativeSection({ onOpen }) {
+      const [ref, visible] = useReveal(0.1);
+      return (
+        <section>
+          <div className="section-header">
+            <span className="section-label">Creative Work</span>
+          </div>
+          <div ref={ref} className={`creative-grid card-reveal ${visible ? 'visible' : ''}`}>
+            {CREATIVE.map((item, i) => (
+              <div key={i} className="creative-item" onClick={() => onOpen(item)}>
+                {item.type === 'video'
+                  ? <video src={item.media} autoPlay loop muted playsInline />
+                  : <img src={item.media} alt={item.title} />
+                }
+                <div className="creative-item-overlay">
+                  <div className="creative-item-title">{item.title}</div>
+                  <div className="creative-item-desc">{item.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    // ─── About ──────────────────────────────────────────────────────────────────
+    function AboutSection() {
+      const [ref, visible] = useReveal(0.1);
+      return (
+        <section className="about-section" ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(32px)', transition: 'opacity 0.9s ease, transform 0.9s ease' }}>
+          <div className="section-label">Background</div>
+          <div className="about-grid">
+            <div>
+              <div className="about-bio">
+                <p>The <span style={{ color: 'var(--accent)' }}>Iovine and Young Academy</span> is a first-of-its-kind program built on the belief that the biggest problems in the world require people who refuse to work in silos.</p>
+                <p>Founded by Jimmy Iovine & Dr. Dre, the Academy trains a small, highly selective cohort to operate at the intersection of technology, design, business, and the arts — simultaneously, not sequentially.</p>
+               
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+              <div>
+                <div className="about-detail-label">Experience <a href="https://drive.google.com/file/d/1o45AmgtqrJzkI6SirF3MK5DLP4-x20mA/view?usp=sharing" target="_blank" rel="noopener" style={{ color: 'var(--accent)', marginLeft: 8 }}>↗ resume</a></div>
+                <ul className="chip-list">
+                  {EXPERIENCE.map(e => (
+                    <li key={e.name}>
+                      <div className="chip">
+                        <img src={e.logo} className="chip-logo" alt={e.name} />
+                        <div><div className="chip-title">{e.name}</div><div className="chip-sub">{e.role} · {e.period}</div></div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <div className="about-detail-label">Leadership & Involvement</div>
+                <ul className="chip-list">
+                  {LEADERSHIP.map(l => (
+                    <li key={l.name}>
+                      <div className="chip">
+                        <img src={l.logo} className="chip-logo" alt={l.name} />
+                        <div><div className="chip-title">{l.name}</div><div className="chip-sub">{l.role} · {l.period}</div></div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ marginTop: 64 }}>
+            <div className="about-detail-label">Sports</div>
+            <div className="sports-grid">
+              <img src="imgs/swim.png" alt="Swimming" />
+              <img src="imgs/medal.png" alt="Medal" />
+              <img src="imgs/run.png" alt="Running" />
+              <img src="imgs/half.png" alt="Half marathon" />
+            </div>
+            <ul className="sports-bullets" style={{ marginTop: 16 }}>
+              {['Competitive swimmer for 10+ years','Represented the largest sport club in LATAM','Multi national and state medalist','Started running after retiring from swimming','Ran 3 half marathons in the past year','Currently training for a sub 2-hour half'].map(b => <li key={b}>{b}</li>)}
+            </ul>
+          </div>
+
+          <div style={{ marginTop: 64 }}>
+            <div className="about-detail-label">My Book Shelf</div>
+            <div className="books-scroll">
+              {BOOKS.map((b, i) => <img key={i} src={b} alt="" />)}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ─── Footer ─────────────────────────────────────────────────────────────────
+    function Footer() {
+      return (
+        <footer className="footer">
+          <div>
+            <div className="footer-name">Larissa Oliveira</div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--muted)', marginTop: 8 }}>Building at the intersection of technology, design & business</div>
+          </div>
+          <div className="footer-links">
+            <a href="mailto:abujamra@usc.edu">abujamra@usc.edu</a>
+            <a href="https://linkedin.com/in/larissa-oliveira2005" target="_blank" rel="noopener">linkedin.com/in/larissa-oliveira2005</a>
+            <div className="footer-copy">© 2025 Larissa Oliveira</div>
+          </div>
+        </footer>
+      );
+    }
+
+    // ─── Project Overlay ────────────────────────────────────────────────────────
+    function ProjectOverlay({ project, onClose }) {
+      const scrollRef = useRef(null);
+      useEffect(() => {
+        if (project && scrollRef.current) scrollRef.current.scrollTop = 0;
+        document.body.style.overflow = project ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+      }, [project]);
+
+      useEffect(() => {
+        const onKey = e => { if (e.key === 'Escape') onClose(); };
+        document.addEventListener('keydown', onKey);
+        return () => document.removeEventListener('keydown', onKey);
+      }, [onClose]);
+
+      const renderSection = (sec, i) => {
+        const isAlt = i % 2 === 1;
+        return (
+          <div key={i} className={`proj-section${isAlt ? ' proj-section--alt' : ''}`} style={isAlt ? { background: 'var(--surface)', maxWidth: 'none', padding: '64px 48px' } : {}}>
+            <div style={{ maxWidth: 800, margin: '0 auto' }}>
+              <div className="proj-heading">{sec.heading}</div>
+              <p className="proj-body">{sec.body}</p>
+              {sec.type === 'text-images' && sec.images && (
+                <div className={`proj-gallery ${sec.images.length === 1 ? 'proj-gallery--single' : ''}`}>
+                  {sec.images.map((img, j) => <img key={j} src={img} alt="" />)}
+                </div>
+              )}
+              {sec.type === 'feature' && sec.image && (
+                <div className="proj-feature-img"><img src={sec.image} alt="" /></div>
+              )}
+              {sec.type === 'side' && (
+                <div className="proj-side" style={{ marginTop: 28 }}>
+                  {sec.image && <img src={sec.image} alt="" style={{ borderRadius: 8 }} />}
+                  <div>
+                    {sec.news && (
+                      <div className="news-snippet">
+                        <div className="news-source">{sec.news.source}</div>
+                        <div className="news-headline">{sec.news.headline}</div>
+                        <a href={sec.news.link} target="_blank" rel="noopener" className="news-link">Read article ↗</a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      return (
+        <div className={`overlay ${project ? 'open' : ''}`}>
+          <div className="overlay-nav">
+            <button className="overlay-back" onClick={onClose}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              Back
+            </button>
+            {project?.externalUrl && (
+              <a href={project.externalUrl} target="_blank" rel="noopener" style={{ fontSize: '0.75rem', letterSpacing: '0.08em', color: 'var(--accent)' }}>
+                Visit site ↗
+              </a>
+            )}
+          </div>
+          <div className="overlay-scroll" ref={scrollRef}>
+            {project && (
+              <>
+                <div className="overlay-hero">
+                  <h1 className="overlay-title">{project.title}</h1>
+                  <div className="overlay-meta">
+                    <div className="overlay-meta-item"><label>Timeline</label><span>{project.timeline}</span></div>
+                    <div className="overlay-meta-item"><label>Role</label><span>{project.role}</span></div>
+                  </div>
+                </div>
+                {project.sections.map(renderSection)}
+              </>
+            )}
+            <Footer />
+          </div>
+        </div>
+      );
+    }
+
+    // ─── Lightbox ───────────────────────────────────────────────────────────────
+    function Lightbox({ item, onClose }) {
+      useEffect(() => {
+        const onKey = e => { if (e.key === 'Escape') onClose(); };
+        document.addEventListener('keydown', onKey);
+        return () => document.removeEventListener('keydown', onKey);
+      }, [onClose]);
+
+      return (
+        <div className={`lightbox ${item ? 'open' : ''}`} onClick={onClose}>
+          <button className="lightbox-close" onClick={onClose}>×</button>
+          {item && (
+            item.type === 'video'
+              ? <video src={item.media} autoPlay loop muted playsInline onClick={e => e.stopPropagation()} />
+              : <img src={item.media} alt={item.title} onClick={e => e.stopPropagation()} />
+          )}
+          {item && <div className="lightbox-caption">{item.title} — {item.desc}</div>}
+        </div>
+      );
+    }
+
+    // ─── Nav ────────────────────────────────────────────────────────────────────
+    function Nav({ onSection }) {
+      const [visible, setVisible] = useState(false);
+      useEffect(() => {
+        const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.7);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+
+      return (
+        <nav className={`nav ${visible ? 'visible' : ''}`}>
+          <div className="nav-name">Larissa Oliveira</div>
+          <div className="nav-links">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#creative">Creative</a>
+            <a href="mailto:abujamra@usc.edu">Contact</a>
+          </div>
+        </nav>
+      );
+    }
+
+    // ─── App ────────────────────────────────────────────────────────────────────
+    function App() {
+      const [activeProject, setActiveProject] = useState(null);
+      const [activeCreative, setActiveCreative] = useState(null);
+      const [page, setPage] = useState('home');
+
+      useEffect(() => { window.scrollTo(0, 0); }, [page]);
+
+      if (page === 'projects') return (
+        <>
+          <nav className="nav visible">
+            <button onClick={() => setPage('home')} className="overlay-back" style={{ background: 'none', border: 'none' }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              Back
+            </button>
+            <div className="nav-links"><a href="#" onClick={e => { e.preventDefault(); setPage('creative'); }}>Creative work</a></div>
+          </nav>
+          <div style={{ paddingTop: 80 }}><ProjectsSection onOpen={setActiveProject} /></div>
+          <Footer />
+          <ProjectOverlay project={activeProject} onClose={() => setActiveProject(null)} />
+        </>
+      );
+
+      if (page === 'creative') return (
+        <>
+          <nav className="nav visible">
+            <button onClick={() => setPage('home')} className="overlay-back" style={{ background: 'none', border: 'none' }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              Back
+            </button>
+            <div className="nav-links"><a href="#" onClick={e => { e.preventDefault(); setPage('projects'); }}>Projects</a></div>
+          </nav>
+          <div style={{ paddingTop: 80 }}><CreativeSection onOpen={setActiveCreative} /></div>
+          <Footer />
+          <Lightbox item={activeCreative} onClose={() => setActiveCreative(null)} />
+        </>
+      );
+
+      return (
+        <>
+          <Nav />
+          <AnimatedHero />
+          <div id="about">
+            <div className="hero-end-spacer" aria-hidden="true" />
+            <ManifestoSection />
+          </div>
+          <FeaturedWork onOpenProject={setActiveProject} onGoProjects={() => setPage('projects')} onGoCreative={() => setPage('creative')} />
+          <AboutSection />
+          <Footer />
+          <ProjectOverlay project={activeProject} onClose={() => setActiveProject(null)} />
+          <Lightbox item={activeCreative} onClose={() => setActiveCreative(null)} />
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
