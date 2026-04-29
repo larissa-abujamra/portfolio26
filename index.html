@@ -178,7 +178,7 @@
       padding: 4px 10px; border-radius: 100px;
       background: var(--surface2); color: var(--muted);
     }
-    .pill-accent { background: oklch(94% 0.06 28); color: var(--accent); }
+    .pill-accent { background: oklch(94% 0.04 240); color: oklch(40% 0.12 240); }
     .card-reveal {
       opacity: 0; transform: translateY(30px);
       transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1);
@@ -203,7 +203,7 @@
     /* ── ABOUT SECTION ── */
     .about-section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--border); }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 48px; }
-    .about-bio { font-family: var(--font-s); font-size: clamp(1.1rem, 2vw, 1.7rem); line-height: 1.5; color: var(--ink); }
+    .about-bio { font-family: var(--font-s); font-size: clamp(1.1rem, 2vw, 1.7rem); line-height: 1.5; color: var(--ink); font-weight: 400; }
     .about-bio em { font-style: italic; color: var(--accent); }
     .about-bio p + p { margin-top: 1em; }
     .about-detail-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
@@ -226,7 +226,7 @@
     /* ── BOOKS ── */
     .books-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 16px 0; scrollbar-width: none; }
     .books-scroll::-webkit-scrollbar { display: none; }
-    .books-scroll img { height: 160px; width: auto; border-radius: 4px; flex-shrink: 0; transition: transform 0.3s; }
+    .books-scroll img { height: 200px; width: auto; border-radius: 4px; flex-shrink: 0; transition: transform 0.3s; }
     .books-scroll img:hover { transform: scale(1.08) translateY(-4px); }
 
     /* ── FOOTER ── */
@@ -276,7 +276,7 @@
     .proj-heading { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
     .proj-body { font-family: var(--font-s); font-size: clamp(1rem, 1.8vw, 1.4rem); line-height: 1.6; color: var(--ink); }
     .proj-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 28px; }
-    .proj-gallery img { width: 100%; border-radius: 4px; object-fit: cover; }
+    .proj-gallery img { width: 100%; border-radius: 4px; object-fit: cover; aspect-ratio: 4/3; }
     .proj-gallery--single img { grid-column: 1 / -1; }
     .proj-feature-img { width: 100%; border-radius: 8px; margin-top: 28px; overflow: hidden; }
     .proj-feature-img img { width: 100%; }
@@ -396,10 +396,14 @@
         id: 'hiro', title: 'HIRO',
         tags: ['full-stack', 'ui/ux', 'health tech'],
         cardImg: 'imgs/hiro.png', cardBg: '#dde5ed',
-        timeline: '2025 – Present', role: 'Full-Stack · Product & Customer Discovery',
+        timeline: 'Mar 2026 – Present', role: 'Full-Stack · Product & Customer Discovery',
+        externalUrl: 'https://hiro-health.vercel.app/',
         sections: [
-          { type: 'text', heading: 'Overview', body: 'An AI-powered clinical decision support tool designed to help healthcare providers navigate complex patient cases with greater speed and confidence. HIRO brings appointment context, patient history, and next steps into one focused workflow built for high-stakes clinical settings.' },
-          { type: 'text-images', heading: 'Interface', body: "Dashboard and consultation flows designed for clarity under time pressure, with a calm visual language that keeps attention on the patient and the work at hand.", images: ['imgs/hiro.png'] }
+          { type: 'text', heading: 'The Problem', body: 'Physicians spend up to 2 hours per day on documentation — time that could go toward their patients. Administrative burden is the #1 driver of burnout in medicine. Hiro gives that time back.' },
+          { type: 'text', heading: 'What We\'re Building', body: 'Hiro uses AI to transcribe medical consultations in real time and automatically generate complete SOAP records — in seconds. Physicians focus entirely on the patient while Hiro handles the paperwork. The product integrates with Memed for digital prescriptions and Google Calendar for scheduling, and runs entirely in the browser with no installation required.' },
+          { type: 'text-images', heading: 'Interface', body: 'Dashboard and consultation flows designed for clarity under time pressure — a calm visual language that keeps attention on the patient and the work at hand. The SOAP record is generated with one click, reviewed inline, and exported immediately.', images: ['imgs/hiro.png'] },
+          { type: 'text', heading: 'My Role', body: 'I lead full-stack development and product discovery — conducting interviews with physicians in Brazil, shaping the core workflow, and building the product end-to-end. I also drive the go-to-market strategy targeting Brazilian clinics, where the documentation burden is especially acute.' },
+          { type: 'site-preview', heading: 'Live Product', url: 'https://hiro-health.vercel.app/' }
         ]
       },
       {
@@ -414,7 +418,7 @@
           { type: 'text-images', heading: 'Expansion & Growth', body: "We developed partnerships with external organizations and NGOs to broaden our reach, including Instituto Velho Amigo, a nonprofit dedicated to the well-being of older adults, and Clube Paineiras do Morumby, a country club in São Paulo where we ran workshops for members and the local community.", images: ['imgs/va.png', 'imgs/cpm.png'] },
           { type: 'text-images', heading: 'Corporate Partnerships', body: "We partnered with companies like SAP for their 'Bring Your Parents to Work' day, hosting a dedicated Faça Parte technology workshop at their São Paulo office and reaching new audiences through corporate social responsibility initiatives.", images: ['imgs/corp.png', 'imgs/sap.png'] },
           { type: 'side', heading: 'Finalist, SXSW EDU Student Impact Challenge', body: "Selected to pitch at one of the biggest stages for technology and impact innovation in the world. We were the only non-American team selected, making the experience even more special.", image: 'imgs/sxsw.png', news: { source: 'ESTADÃO', headline: 'Brazilian students are among the finalists at the world\'s largest innovation event: SXSW EDU!', link: 'https://www.soseducacao.com.br/post/tem-brasil-no-p%C3%B3dio-estudantes-brasileiros-entre-os-finalistas-no-maior-evento-de-inova%C3%A7%C3%A3o-do-mundo' } },
-          { type: 'text-images', heading: 'Brazilian Internet Congress', body: "Invited to speak at the 'Technologies for Social Transformation' panel. It was a privilege to learn more about the initiatives of the other panelists, who are using technology to drive solutions for a better and more equitable Brazil.", images: ['imgs/mic.png', 'imgs/congresso.png'] }
+          { type: 'text-images', heading: 'Brazilian Internet Congress', body: "Invited to speak at the 'Technologies for Social Transformation' panel. It was a privilege to learn more about the initiatives of the other panelists, who are using technology to drive solutions for a better and more equitable Brazil.", images: ['imgs/mic.png', 'imgs/congresso.png'], imgPositions: ['center', 'right center'] }
         ]
       },
       {
@@ -423,9 +427,9 @@
         cardImg: 'imgs/gait.png', cardBg: '#dfe8e4',
         timeline: 'Nov 2025 – Present', role: 'Co-founder · Product & GTM',
         sections: [
-          { type: 'text', heading: 'The Idea', body: "Gait was developed during a one-semester startup incubator at the University of Southern California, where our team won the Audience Choice Award at Demo Day. The idea emerged after discovering research showing strong correlations between changes in gait and early neurocognitive decline. Using computer vision and machine learning, Gait analyzes a person's walking pattern through simple smartphone video to detect subtle deviations that may signal early neurological or mobility-related decline." },
+          { type: 'side', heading: 'The Idea', body: "Gait was developed during a one-semester startup incubator at the University of Southern California, where our team won the Audience Choice Award at Demo Day. The idea emerged after discovering research showing strong correlations between changes in gait and early neurocognitive decline. Using computer vision and machine learning, Gait analyzes a person's walking pattern through simple smartphone video to detect subtle deviations that may signal early neurological or mobility-related decline.", image: 'imgs/demo2.png', imageRight: true },
           { type: 'text-images', heading: 'The Technology', body: "Gait uses computer vision and machine learning to analyze walking patterns through standard smartphone or camera video. By leveraging pose estimation and time-series modeling, the system tracks metrics such as stride length, variability, and balance, comparing them against an individual's baseline over time.", images: ['imgs/gait.png'] },
-          { type: 'text-images', heading: 'The Impact', body: "Our long-term vision is to shift healthcare from reactive intervention to proactive monitoring. By detecting subtle deviations in gait earlier, Gait has the potential to provide families, caregivers, and clinicians with meaningful insights before severe symptoms emerge.", images: ['imgs/demo.png', 'imgs/demo2.png'] }
+          { type: 'side', heading: 'The Impact', body: "Our long-term vision is to shift healthcare from reactive intervention to proactive monitoring. By detecting subtle deviations in gait earlier, Gait has the potential to provide families, caregivers, and clinicians with meaningful insights before severe symptoms emerge.", image: 'imgs/demo.png', imageRight: true, link: { label: 'View Figma Pitch Deck ↗', url: 'https://www.figma.com/deck/dCYWnFU9JgcxWfUzlHvR40/gait---script-adapted?node-id=266-1563&t=7HcAUB9RcUdtT7eX-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1' } }
         ]
       },
       {
@@ -449,7 +453,7 @@
         externalUrl: 'https://brasausc.com',
         timeline: '2025 – Present', role: 'Web Developer · UI/UX',
         sections: [
-          { type: 'text', heading: 'Overview', body: "Designed and coded BRASA USC's webpage using HTML/CSS/JavaScript, improving accessibility and centralizing communication for 100+ members. The project involved full UI design from scratch, with a focus on clarity, mobile responsiveness, and representing the energy of a vibrant Brazilian student community at USC." }
+          { type: 'text', heading: 'Overview', body: "Designed and coded BRASA USC's webpage using HTML/CSS/JavaScript, improving accessibility and centralizing communication for 100+ members. The project involved full UI design from scratch, with a focus on clarity, mobile responsiveness, and representing the energy of a vibrant Brazilian student community at USC.", link: { label: 'Visit Website ↗', url: 'https://brasausc.com/' } }
         ]
       }
     ];
@@ -526,12 +530,24 @@
     function FeaturedWork({ onOpenProject, onGoProjects, onGoCreative }) {
       const [active, setActive] = useState(0);
       const [progress, setProgress] = useState(0);
+      const [inView, setInView] = useState(false);
       const rafRef = useRef(null);
-      const startRef = useRef(performance.now());
+      const startRef = useRef(null);
       const activeRef = useRef(0);
-      const DURATION = 5000;
+      const sectionRef = useRef(null);
+      const DURATION = 6000;
 
       useEffect(() => {
+        const obs = new IntersectionObserver(
+          ([e]) => { if (e.isIntersecting) setInView(true); },
+          { threshold: 0.3 }
+        );
+        if (sectionRef.current) obs.observe(sectionRef.current);
+        return () => obs.disconnect();
+      }, []);
+
+      useEffect(() => {
+        if (!inView) return;
         activeRef.current = active;
         startRef.current = performance.now();
         const tick = (now) => {
@@ -546,7 +562,7 @@
         };
         rafRef.current = requestAnimationFrame(tick);
         return () => cancelAnimationFrame(rafRef.current);
-      }, [active]);
+      }, [active, inView]);
 
       const goTo = (i) => {
         cancelAnimationFrame(rafRef.current);
@@ -562,7 +578,7 @@
       const item = FEATURED[active];
 
       return (
-        <section>
+        <section ref={sectionRef}>
           <div className="section-header">
             <span className="section-label">Project highlights</span>
           </div>
@@ -585,8 +601,9 @@
               </div>
               <div
                 className={`featured-visual${item.visualFit === 'contain' ? ' featured-visual--contain' : ''}${item.id === 'gait' ? ' featured-visual--square' : ''}`}
-                style={{ background: item.visualFit === 'contain' ? 'transparent' : item.cardBg }}
+                style={{ background: item.visualFit === 'contain' ? 'transparent' : item.cardBg, cursor: 'pointer' }}
                 key={`vis-${active}`}
+                onClick={openDetail}
               >
                 {item.visual
                   ? <img src={item.visual} alt={item.title} />
@@ -658,7 +675,7 @@
       const [ref, visible] = useReveal(0.18, { rootMargin: '0px 0px -12% 0px' });
       return (
         <section className="manifesto" ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(40px)', transition: 'opacity 1.25s ease, transform 1.25s cubic-bezier(0.16,1,0.3,1)' }}>
-          <div className="manifesto-label">About</div>
+          <div className="manifesto-label"></div>
           <p className="manifesto-text">
             I was born and raised in Brazil and am currently based in Los Angeles. At USC's Iovine and Young Academy, I get to explore innovation at the intersection of <em>technology, design, and business.</em>
           </p>
@@ -754,9 +771,9 @@
       const [ref, visible] = useReveal(0.1);
       return (
         <section className="about-section" ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(32px)', transition: 'opacity 0.9s ease, transform 0.9s ease' }}>
-          <div className="section-label">Background</div>
-          <div className="about-grid">
-            <div>
+          <div className="about-grid" style={{ marginTop: 0 }}>
+            <div style={{ marginTop: 0 }}>
+              <div className="about-detail-label" style={{ marginBottom: 20 }}>About</div>
               <div className="about-bio">
                 <p>The <span style={{ color: 'var(--accent)' }}>Iovine and Young Academy</span> is a first-of-its-kind program built on the belief that the biggest problems in the world require people who refuse to work in silos.</p>
                 <p>Founded by Jimmy Iovine & Dr. Dre, the Academy trains a small, highly selective cohort to operate at the intersection of technology, design, business, and the arts — simultaneously, not sequentially.</p>
@@ -802,7 +819,7 @@
               <img src="imgs/half.png" alt="Half marathon" />
             </div>
             <ul className="sports-bullets" style={{ marginTop: 16 }}>
-              {['Competitive swimmer for 10+ years','Represented the largest sport club in LATAM','Multi national and state medalist','Started running after retiring from swimming','Ran 3 half marathons in the past year','Currently training for a sub 2-hour half'].map(b => <li key={b}>{b}</li>)}
+              {['Competitive swimmer for 10+ years', 'Started running after retiring from swimming','Represented the largest sport club in LATAM','Ran 3 half marathons in the past year','Multi national and state medalist','Currently training for a sub 2-hour half'].map(b => <li key={b}>{b}</li>)}
             </ul>
           </div>
 
@@ -852,18 +869,32 @@
         const isAlt = i % 2 === 1;
         return (
           <div key={i} className={`proj-section${isAlt ? ' proj-section--alt' : ''}`} style={isAlt ? { background: 'var(--surface)', maxWidth: 'none', padding: '64px 48px' } : {}}>
-            <div style={{ maxWidth: 800, margin: '0 auto' }}>
+            <div style={{ maxWidth: sec.type === 'side' && sec.imageRight ? 'none' : 800, margin: '0 auto' }}>
               <div className="proj-heading">{sec.heading}</div>
-              <p className="proj-body">{sec.body}</p>
+              {!(sec.type === 'side' && sec.imageRight) && <p className="proj-body">{sec.body}</p>}
+              {!(sec.type === 'side' && sec.imageRight) && sec.link && (
+                <a href={sec.link.url} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 20, padding: '10px 22px', borderRadius: 100, border: '1.5px solid var(--border)', fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'var(--font-d)', fontWeight: 600, color: 'var(--accent)', textDecoration: 'none', transition: 'border-color 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                >{sec.link.label}</a>
+              )}
               {sec.type === 'text-images' && sec.images && (
                 <div className={`proj-gallery ${sec.images.length === 1 ? 'proj-gallery--single' : ''}`}>
-                  {sec.images.map((img, j) => <img key={j} src={img} alt="" />)}
+                  {sec.images.map((img, j) => <img key={j} src={img} alt="" style={{ objectPosition: sec.imgPositions?.[j] || 'center' }} />)}
                 </div>
               )}
               {sec.type === 'feature' && sec.image && (
                 <div className="proj-feature-img"><img src={sec.image} alt="" /></div>
               )}
-              {sec.type === 'side' && (
+              {sec.type === 'site-preview' && sec.url && (
+                <a href={sec.url} target="_blank" rel="noopener" style={{ display: 'block', marginTop: 28, position: 'relative', borderRadius: 10, overflow: 'hidden', boxShadow: '0 12px 40px rgba(22,18,12,0.13)', textDecoration: 'none' }}>
+                  <iframe src={sec.url} style={{ width: '100%', height: 480, border: 'none', display: 'block', pointerEvents: 'none' }} scrolling="no" title="Hiro landing page preview" />
+                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(22,18,12,0.03)', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', padding: 20 }}>
+                    <span style={{ background: 'var(--ink)', color: 'var(--bg)', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '8px 18px', borderRadius: 100 }}>Visit site ↗</span>
+                  </div>
+                </a>
+              )}
+              {sec.type === 'side' && !sec.imageRight && (
                 <div className="proj-side" style={{ marginTop: 28 }}>
                   {sec.image && <img src={sec.image} alt="" style={{ borderRadius: 8 }} />}
                   <div>
@@ -875,6 +906,20 @@
                       </div>
                     )}
                   </div>
+                </div>
+              )}
+              {sec.type === 'side' && sec.imageRight && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center', marginTop: 16 }}>
+                  <div>
+                    <p className="proj-body">{sec.body}</p>
+                    {sec.link && (
+                      <a href={sec.link.url} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 20, padding: '10px 22px', borderRadius: 100, border: '1.5px solid var(--border)', fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'var(--font-d)', fontWeight: 600, color: 'var(--accent)', textDecoration: 'none', transition: 'border-color 0.2s' }}
+                        onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent)'}
+                        onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                      >{sec.link.label}</a>
+                    )}
+                  </div>
+                  <img src={sec.image} alt="" style={{ borderRadius: 8, width: '100%', aspectRatio: '4/3', objectFit: 'cover', objectPosition: 'center' }} />
                 </div>
               )}
             </div>
@@ -936,7 +981,7 @@
     }
 
     // ─── Nav ────────────────────────────────────────────────────────────────────
-    function Nav({ onSection }) {
+    function Nav({ onSection, onSetPage }) {
       const [visible, setVisible] = useState(false);
       useEffect(() => {
         const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.7);
@@ -949,8 +994,8 @@
           <div className="nav-name">Larissa Oliveira</div>
           <div className="nav-links">
             <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#creative">Creative</a>
+            <a href="#" onClick={e => { e.preventDefault(); onSetPage && onSetPage('projects'); }}>Projects</a>
+            <a href="#" onClick={e => { e.preventDefault(); onSetPage && onSetPage('creative'); }}>Creative</a>
             <a href="mailto:abujamra@usc.edu">Contact</a>
           </div>
         </nav>
@@ -997,7 +1042,7 @@
 
       return (
         <>
-          <Nav />
+          <Nav onSetPage={setPage} />
           <AnimatedHero />
           <div id="about">
             <div className="hero-end-spacer" aria-hidden="true" />
