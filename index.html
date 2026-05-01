@@ -123,7 +123,7 @@
     .manifesto-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
     .manifesto-text {
       font-family: var(--font-s);
-      font-size: clamp(calc(1.7rem), calc(3.9vw), calc(4.6rem));
+      font-size: clamp(calc(1.8rem), calc(4.1vw), calc(4.8rem));
       line-height: 1.15; letter-spacing: -0.01em;
       color: var(--ink);
     }
@@ -187,24 +187,9 @@
 
     /* ── CREATIVE GRID ── */
     .creative-grid { columns: 3; gap: 4px; padding: 0 48px 80px; max-width: 1200px; margin: 0 auto; }
-    .creative-item { break-inside: avoid; margin-bottom: 6px; position: relative; overflow: hidden; cursor: pointer; border-radius: 4px; }
+    .creative-item { break-inside: avoid; margin-bottom: 4px; position: relative; overflow: hidden; cursor: pointer; border-radius: 4px; }
     .creative-item img, .creative-item video { width: 100%; display: block; transition: transform 0.5s ease; }
-    .creative-item:hover img, .creative-item:hover video { transform: none; }
-    .creative-item--small-left img { width: 58%; margin-left: 0; margin-right: auto; }
-    .creative-item-pair { display: flex; gap: 4px; align-items: flex-start; }
-    .creative-item-pair img { width: calc(50% - 2px); }
-    .creative-item--pair-small .creative-item-pair { width: 96%; }
-    .creative-item-half { position: relative; width: calc(50% - 2px); cursor: pointer; overflow: hidden; border-radius: 4px; }
-    .creative-item-half img { width: 100%; display: block; }
-    .creative-item-half-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(22,18,12,0.72) 0%, transparent 55%);
-      opacity: 0; transition: opacity 0.25s ease;
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 12px;
-    }
-    .creative-item-half:hover .creative-item-half-overlay { opacity: 1; }
-    .creative-item-half-title { color: #f0ebe0; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2; }
-    .creative-item-half-desc { color: rgba(240,235,224,0.75); font-size: 0.56rem; margin-top: 3px; line-height: 1.2; }
+    .creative-item:hover img, .creative-item:hover video { transform: scale(1.04); }
     .creative-item-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(22,18,12,0.7) 0%, transparent 50%);
@@ -474,13 +459,10 @@
     ];
 
     const CREATIVE = [
-      { title: 'Robotic Turtle', desc: 'Made with 3D printer, lego pieces, servo motors and clay', media: 'imgs/TURTLE.mp4', type: 'video' },
       { title: 'Oil Painting', desc: 'Black & white painting inspired by the Barra do Sahy 2024 landslides', media: 'imgs/boy.png', type: 'img' },
-      { title: 'Oil Painting', desc: 'Oil painting study', media: 'imgs/oilpainting.jpg', media2: 'imgs/grandpa.png', title2: 'Grandpa Pencil Drawing', desc2: 'Pencil drawing portrait study', type: 'img', pairSmall: true },
+      { title: 'Robotic Turtle', desc: 'Made with 3D printer, lego pieces, servo motors and clay', media: 'imgs/TURTLE.mp4', type: 'video' },
       { title: 'Acrylic Painting', desc: '"State of Mind"', media: 'imgs/paint.png', type: 'img' },
-      { title: 'Charcoal', desc: 'Self-portrait — upside down', media: 'imgs/me.png', type: 'img', tall: true },
-      { title: 'Bird House', desc: 'Made using grafitte pencils, practicing 2 point perspective', media: 'imgs/birdhouse.jpg', type: 'img' },
-      { title: 'Man', desc: 'Graphite pencil drawing study', media: 'imgs/man.png', media2: 'imgs/man1.png', type: 'img' }
+      { title: 'Charcoal', desc: 'Self-portrait — upside down', media: 'imgs/me.png', type: 'img', tall: true }
     ];
 
     const EXPERIENCE = [
@@ -695,7 +677,9 @@
         <section className="manifesto" ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? 'none' : 'translateY(40px)', transition: 'opacity 1.25s ease, transform 1.25s cubic-bezier(0.16,1,0.3,1)' }}>
           <div className="manifesto-label"></div>
           <p className="manifesto-text">
-            I was born and raised in Brazil and am currently based in Los Angeles.<br /> At USC's Iovine and Young Academy, I get to explore innovation at the intersection of <em>technology, design, and business.</em>
+            I was born and raised in Brazil and am currently based in Los Angeles.  
+            
+            At USC's Iovine and Young Academy, I get to explore innovation at the intersection of <em>technology, design, and business.</em>
           </p>
           <div style={{ marginTop: 40 }}></div>
         </section>
@@ -768,36 +752,15 @@
           </div>
           <div ref={ref} className={`creative-grid card-reveal ${visible ? 'visible' : ''}`}>
             {CREATIVE.map((item, i) => (
-              <div key={i} className={`creative-item${item.smallLeft ? ' creative-item--small-left' : ''}${item.pairSmall ? ' creative-item--pair-small' : ''}`} onClick={() => { if (!item.media2) onOpen(item); }}>
+              <div key={i} className="creative-item" onClick={() => onOpen(item)}>
                 {item.type === 'video'
                   ? <video src={item.media} autoPlay loop muted playsInline />
-                  : item.media2
-                    ? (
-                      <div className="creative-item-pair">
-                        <div className="creative-item-half" onClick={(e) => { e.stopPropagation(); onOpen(item); }}>
-                          <img src={item.media} alt={item.title} />
-                          <div className="creative-item-half-overlay">
-                            <div className="creative-item-half-title">{item.title}</div>
-                            <div className="creative-item-half-desc">{item.desc}</div>
-                          </div>
-                        </div>
-                        <div className="creative-item-half" onClick={(e) => { e.stopPropagation(); onOpen({ title: item.title2 || `${item.title} 2`, desc: item.desc2 || item.desc, media: item.media2, type: 'img' }); }}>
-                          <img src={item.media2} alt={item.title2 || `${item.title} 2`} />
-                          <div className="creative-item-half-overlay">
-                            <div className="creative-item-half-title">{item.title2 || `${item.title} 2`}</div>
-                            <div className="creative-item-half-desc">{item.desc2 || item.desc}</div>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                    : <img src={item.media} alt={item.title} />
+                  : <img src={item.media} alt={item.title} />
                 }
-                {!item.media2 && (
-                  <div className="creative-item-overlay">
-                    <div className="creative-item-title">{item.title}</div>
-                    <div className="creative-item-desc">{item.desc}</div>
-                  </div>
-                )}
+                <div className="creative-item-overlay">
+                  <div className="creative-item-title">{item.title}</div>
+                  <div className="creative-item-desc">{item.desc}</div>
+                </div>
               </div>
             ))}
           </div>
