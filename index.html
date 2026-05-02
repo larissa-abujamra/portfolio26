@@ -50,7 +50,18 @@
       backdrop-filter: blur(12px);
     }
     .nav-name { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
-    .nav-links { display: flex; gap: 32px; }
+    .nav-menu-btn {
+      display: none;
+      align-items: center; justify-content: center;
+      width: 44px; height: 44px; padding: 0;
+      background: none; border: 1px solid var(--border); border-radius: 8px;
+      cursor: pointer; color: var(--ink);
+      flex-shrink: 0;
+    }
+    .nav-menu-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .nav-menu-icon { display: flex; flex-direction: column; gap: 5px; width: 18px; }
+    .nav-menu-icon span { display: block; height: 2px; background: var(--ink); border-radius: 1px; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
     .nav-links a:hover { color: var(--ink); }
 
@@ -387,7 +398,29 @@
     @keyframes scrollPulse { 0%, 100% { opacity: 0.4; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.2); } }
 
     @media (max-width: 768px) {
-      .nav { padding: 16px 24px; }
+      .nav { padding: 14px 16px; align-items: center; }
+      .nav-name { max-width: calc(100vw - 120px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .nav-menu-btn { display: inline-flex; }
+      .nav-links {
+        display: none;
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 0;
+        padding: 8px 0 14px;
+        margin: 0;
+        background: rgba(240,235,224,0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 16px 40px rgba(22,18,12,0.08);
+      }
+      .nav.nav--mobile-menu-open .nav-links { display: flex; }
+      .nav-links a {
+        padding: 14px 20px;
+        border-top: 1px solid var(--border);
+      }
+      .nav-links a:first-of-type { border-top: none; }
+      .nav.nav--inner { flex-wrap: wrap; row-gap: 8px; padding: 12px 16px; }
+      .nav.nav--inner .nav-links { position: static; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-end; gap: 12px; padding: 0; border: none; box-shadow: none; background: transparent; width: 100%; }
+      .nav.nav--inner .nav-links a { padding: 0; border: none; }
       .hero { padding: 80px 24px 60px; }
       .projects-grid { grid-template-columns: 1fr; padding: 0 24px 60px; }
       .creative-grid { columns: 2; padding: 0 24px 60px; }
@@ -1048,19 +1081,57 @@
     // ─── Nav ────────────────────────────────────────────────────────────────────
     function Nav({ onSection, onSetPage }) {
       const [visible, setVisible] = useState(false);
+      const [menuOpen, setMenuOpen] = useState(false);
+      const navRef = useRef(null);
+
       useEffect(() => {
         const timer = setTimeout(() => setVisible(true), 1200);
         return () => clearTimeout(timer);
       }, []);
 
+      useEffect(() => {
+        const onResize = () => { if (window.innerWidth > 768) setMenuOpen(false); };
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+      }, []);
+
+      useEffect(() => {
+        if (!menuOpen) return;
+        const onDown = (e) => {
+          if (navRef.current && !navRef.current.contains(e.target)) setMenuOpen(false);
+        };
+        const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+        document.addEventListener('mousedown', onDown);
+        document.addEventListener('keydown', onKey);
+        return () => {
+          document.removeEventListener('mousedown', onDown);
+          document.removeEventListener('keydown', onKey);
+        };
+      }, [menuOpen]);
+
+      const closeMenu = () => setMenuOpen(false);
+
       return (
-        <nav className={`nav ${visible ? 'visible' : ''}`}>
+        <nav
+          ref={navRef}
+          className={`nav ${visible ? 'visible' : ''}${menuOpen ? ' nav--mobile-menu-open' : ''}`}
+        >
           <div className="nav-name">Larissa Oliveira</div>
-          <div className="nav-links">
-            <a href="#about-section">About</a>
-            <a href="#" onClick={e => { e.preventDefault(); onSetPage && onSetPage('projects'); }}>Projects</a>
-            <a href="#" onClick={e => { e.preventDefault(); onSetPage && onSetPage('creative'); }}>Creative</a>
-            <a href="mailto:abujamra@usc.edu">Contact</a>
+          <button
+            type="button"
+            className="nav-menu-btn"
+            aria-expanded={menuOpen}
+            aria-controls="nav-menu-panel"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            <span className="nav-menu-icon" aria-hidden="true"><span /><span /><span /></span>
+          </button>
+          <div id="nav-menu-panel" className="nav-links" role="navigation">
+            <a href="#about-section" onClick={closeMenu}>About</a>
+            <a href="#" onClick={e => { e.preventDefault(); closeMenu(); onSetPage && onSetPage('projects'); }}>Projects</a>
+            <a href="#" onClick={e => { e.preventDefault(); closeMenu(); onSetPage && onSetPage('creative'); }}>Creative</a>
+            <a href="mailto:abujamra@usc.edu" onClick={closeMenu}>Contact</a>
           </div>
         </nav>
       );
@@ -1076,7 +1147,7 @@
 
       if (page === 'projects') return (
         <>
-          <nav className="nav visible">
+          <nav className="nav visible nav--inner">
             <button onClick={() => setPage('home')} className="overlay-back" style={{ background: 'none', border: 'none' }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               Back
@@ -1091,7 +1162,7 @@
 
       if (page === 'creative') return (
         <>
-          <nav className="nav visible">
+          <nav className="nav visible nav--inner">
             <button onClick={() => setPage('home')} className="overlay-back" style={{ background: 'none', border: 'none' }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               Back
