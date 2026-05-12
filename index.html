@@ -6,7 +6,6 @@
   <title>Larissa Oliveira</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
@@ -23,7 +22,7 @@
       --surface2: #ddd7cc;
       --border: rgba(22,18,12,0.1);
       --font-d: 'Clash Display', sans-serif;
-      --font-s: 'DM Serif Display', serif;
+      --font-s: 'Instrument Serif', serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -78,7 +77,7 @@
       background: var(--bg);
     }
     .hero-welcome {
-      font-family: 'Instrument Serif', 'DM Serif Display', serif;
+      font-family: var(--font-s);
       font-style: italic; font-weight: 400;
       font-size: clamp(2.2rem, 4.4vw, 4rem);
       line-height: 1.05; letter-spacing: -0.005em;
@@ -340,63 +339,44 @@
     .lightbox-close:hover { opacity: 1; }
     .lightbox-caption { position: absolute; bottom: 32px; left: 0; right: 0; text-align: center; color: rgba(240,235,224,0.7); font-size: 0.75rem; letter-spacing: 0.08em; }
 
-    /* ── FEATURED CAROUSEL ── */
-    .featured-wrap { padding: 0 48px 0; max-width: 1200px; margin: 0 auto; }
-    .featured-slide { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; min-height: 380px; }
-    .featured-slide-info { animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both; }
-    .featured-num { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 16px; }
-    .featured-title { font-size: clamp(2.8rem, 5.5vw, 4.5rem); font-weight: 700; letter-spacing: -0.025em; line-height: 0.95; margin-bottom: 14px; }
-    .featured-sub { font-family: var(--font-s); font-style: italic; font-size: 1.05rem; color: var(--muted); margin-bottom: 24px; }
-    .featured-desc { font-size: 0.88rem; line-height: 1.75; color: var(--muted); max-width: 420px; }
-    .featured-visual {
-      border-radius: 12px; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
-      overflow: hidden; animation: fadeIn 0.45s ease both; position: relative;
-      box-shadow: 0 10px 36px rgba(22, 18, 12, 0.1), 0 2px 8px rgba(22, 18, 12, 0.06);
+    /* ── MY WORK ── */
+    .my-work { padding: 100px clamp(24px, 4vw, 48px); max-width: 1400px; margin: 0 auto; }
+    .my-work-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 28px;
     }
-    .featured-visual--square { border-radius: 0; }
-    .featured-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    /* HIRO + FAÇA PARTE: no card panel — image sits on page bg; shadow is on the img only */
-    .featured-visual--contain {
-      border-radius: 0;
-      box-shadow: none;
-      overflow: visible;
-      background: transparent;
-      aspect-ratio: 16/10;
-      padding: 0;
-      box-sizing: border-box;
+    .my-work-buttons {
+      display: flex;
+      gap: clamp(8px, 1vw, 16px);
+      width: 100%;
     }
-    .featured-visual--contain img {
-      position: static; inset: auto; max-width: 100%; max-height: 100%; width: auto; height: auto;
-      object-fit: contain; object-position: center; display: block; border-radius: 0;
-      box-shadow: 0 10px 36px rgba(22, 18, 12, 0.1), 0 2px 8px rgba(22, 18, 12, 0.06);
+    .my-work-btn {
+      border: none;
+      border-radius: clamp(16px, 1.8vw, 24px);
+      height: clamp(160px, 22vw, 260px);
+      font-family: var(--font-s); font-style: italic; font-weight: 400;
+      font-size: clamp(1.6rem, 3.4vw, 3rem);
+      color: var(--ink);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: filter 0.25s ease;
+      min-width: 0; overflow: hidden; white-space: nowrap;
+      flex-basis: 0;
     }
-    .featured-visual-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-    .featured-placeholder-text { font-size: clamp(3rem, 6vw, 5rem); font-weight: 700; opacity: 0.08; letter-spacing: -0.04em; }
-    .featured-tabs { display: flex; gap: 3px; margin-top: 36px; }
-    .featured-tab {
-      flex: 1; padding: 16px 18px; background: var(--surface); border: none; cursor: pointer;
-      text-align: left; border-radius: 6px; position: relative; overflow: hidden;
-      transition: opacity 0.3s, background 0.3s;
-    }
-    .featured-tab.active { background: var(--surface2); }
-    .featured-tab:not(.active) { opacity: 0.52; }
-    .featured-tab-name { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; }
-    .featured-tab-sub { font-size: 0.6rem; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; }
-    .featured-tab-bar { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--accent); transition: none; }
-    .featured-cta { display: flex; gap: 14px; padding: 56px 48px 80px; max-width: 1200px; margin: 0 auto; justify-content: center; }
-    .cta-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px; border-radius: 100px; font-family: var(--font-d);
-      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-      cursor: pointer; border: none; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(22,18,12,0.12); }
-    .cta-btn-primary { background: var(--ink); color: var(--bg); }
-    .cta-btn-secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
-    .cta-btn-secondary:hover { background: var(--surface2); }
-    @media (max-width: 768px) {
-      .featured-slide { grid-template-columns: 1fr; gap: 32px; }
-      .featured-wrap, .featured-cta { padding-left: 24px; padding-right: 24px; }
+    .my-work-btn-projects { background: #8cc7e8; flex-grow: 3; }
+    .my-work-btn-creative { background: #3f86bf; flex-grow: 1; }
+    .my-work-buttons--start .my-work-btn-projects { animation: tugProjects 8s ease-in-out forwards; }
+    .my-work-buttons--start .my-work-btn-creative { animation: tugCreative 8s ease-in-out forwards; }
+    .my-work-btn:hover { filter: brightness(1.06); }
+    @media (max-width: 640px) {
+      .my-work-buttons { flex-direction: column; gap: 10px; }
+      .my-work-btn { animation: none; flex-grow: 1; height: 140px; }
+      .my-work-btn-projects { height: 170px; }
     }
 
     /* ── KEYFRAMES ── */
@@ -406,6 +386,28 @@
     @keyframes scrollPulse { 0%, 100% { opacity: 0.4; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.2); } }
     @keyframes heroWelcomeIn { to { opacity: 1; transform: translateY(0); } }
     @keyframes tilePop { to { opacity: 1; } }
+    @keyframes tugProjects {
+      0%    { flex-grow: 3; }
+      15%   { flex-grow: 2.4; }
+      25%   { flex-grow: 1.7; }
+      35%   { flex-grow: 2.4; }
+      50%   { flex-grow: 3; }
+      65%   { flex-grow: 2.4; }
+      75%   { flex-grow: 1.7; }
+      85%   { flex-grow: 2.4; }
+      100%  { flex-grow: 2; }
+    }
+    @keyframes tugCreative {
+      0%    { flex-grow: 1; }
+      15%   { flex-grow: 1.6; }
+      25%   { flex-grow: 2.3; }
+      35%   { flex-grow: 1.6; }
+      50%   { flex-grow: 1; }
+      65%   { flex-grow: 1.6; }
+      75%   { flex-grow: 2.3; }
+      85%   { flex-grow: 1.6; }
+      100%  { flex-grow: 2; }
+    }
 
     @media (max-width: 768px) {
       .nav { padding: 14px 16px; align-items: center; }
@@ -560,33 +562,6 @@
 
     const TICKER_ITEMS = ['Technology','Design','Business','Innovation','Impact','USC','São Paulo','LA','Startups','Social Impact','Health Tech','Ed Tech'];
 
-    const FEATURED = [
-      {
-        id: 'hiro', num: '01',
-        title: 'HIRO',
-        subtitle: 'AI Medical Tool',
-        tags: ['Full-Stack', 'UI/UX', 'Customer Discovery'],
-        desc: 'An AI-powered clinical decision support tool designed to help healthcare providers navigate complex patient cases with greater speed and confidence.',
-        visual: 'imgs/hiro.png', cardBg: 'var(--bg)', visualFit: 'contain',
-      },
-      {
-        id: 'faca-parte', num: '02',
-        title: 'FAÇA PARTE',
-        subtitle: 'Non-Profit & Education',
-        tags: ['business development', 'partnerships', 'social impact'],
-        desc: 'A nonprofit I co-founded that pairs teenage volunteers with older adults for hands-on technology workshops—growing from community sessions to partnerships with NGOs, schools, and companies including SAP.',
-        visual: 'imgs/facalogo.png', cardBg: '#ede5d8', visualFit: 'contain',
-      },
-      {
-        id: 'gait', num: '03',
-        title: 'GAIT',
-        subtitle: 'Health Technology',
-        tags: ['UI Design', 'Problem Discovery', 'Research'],
-        desc: 'Using computer vision and ML to analyze walking patterns through smartphone video, enabling proactive detection of early neurological decline.',
-        visual: 'imgs/gait.png', cardBg: '#dfe8e4',
-      },
-    ];
-
     // ─── Hooks ─────────────────────────────────────────────────────────────────
     function useReveal(threshold = 0.15, options = {}) {
       const { rootMargin } = options;
@@ -605,104 +580,15 @@
       return [ref, visible];
     }
 
-    // ─── Featured Work Carousel ────────────────────────────────────────────────
-    function FeaturedWork({ onOpenProject, onGoProjects, onGoCreative }) {
-      const [active, setActive] = useState(0);
-      const [progress, setProgress] = useState(0);
-      const [inView, setInView] = useState(false);
-      const rafRef = useRef(null);
-      const startRef = useRef(null);
-      const activeRef = useRef(0);
-      const sectionRef = useRef(null);
-      const DURATION = 6000;
-
-      useEffect(() => {
-        const obs = new IntersectionObserver(
-          ([e]) => { if (e.isIntersecting) setInView(true); },
-          { threshold: 0.3 }
-        );
-        if (sectionRef.current) obs.observe(sectionRef.current);
-        return () => obs.disconnect();
-      }, []);
-
-      useEffect(() => {
-        if (!inView) return;
-        activeRef.current = active;
-        startRef.current = performance.now();
-        const tick = (now) => {
-          const t = Math.min((now - startRef.current) / DURATION, 1);
-          setProgress(t * 100);
-          if (t >= 1) {
-            const next = (activeRef.current + 1) % FEATURED.length;
-            setActive(next);
-            return;
-          }
-          rafRef.current = requestAnimationFrame(tick);
-        };
-        rafRef.current = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(rafRef.current);
-      }, [active, inView]);
-
-      const goTo = (i) => {
-        cancelAnimationFrame(rafRef.current);
-        setProgress(0);
-        setActive(i);
-      };
-
-      const openDetail = () => {
-        const project = PROJECTS.find(p => p.id === FEATURED[active].id);
-        if (project) onOpenProject(project);
-      };
-
-      const item = FEATURED[active];
-
+    // ─── My Work ───────────────────────────────────────────────────────────────
+    function MyWork({ onGoProjects, onGoCreative }) {
+      const [ref, visible] = useReveal(0.35);
       return (
-        <section ref={sectionRef}>
-          <div className="section-header">
-            <span className="section-label">Project highlights</span>
-          </div>
-          <div className="featured-wrap">
-            <div className="featured-slide">
-              <div className="featured-slide-info" key={`info-${active}`}>
-                <div className="featured-num">{item.num} / 0{FEATURED.length}</div>
-                <div className="featured-title">{item.title}</div>
-                <div className="featured-sub">{item.subtitle}</div>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 22 }}>
-                  {item.tags.map(t => <span key={t} className="pill pill-accent">{t}</span>)}
-                </div>
-                <p className="featured-desc">{item.desc}</p>
-                <button onClick={openDetail} style={{ marginTop: 28, background: 'none', border: '1.5px solid var(--border)', borderRadius: 100, padding: '10px 22px', cursor: 'pointer', fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', fontFamily: 'var(--font-d)', fontWeight: 600, transition: 'border-color 0.2s, color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'inherit'; }}
-                >
-                  View project →
-                </button>
-              </div>
-              <div
-                className={`featured-visual${item.visualFit === 'contain' ? ' featured-visual--contain' : ''}${item.id === 'gait' ? ' featured-visual--square' : ''}`}
-                style={{ background: item.visualFit === 'contain' ? 'transparent' : item.cardBg, cursor: 'pointer' }}
-                key={`vis-${active}`}
-                onClick={openDetail}
-              >
-                {item.visual
-                  ? <img src={item.visual} alt={item.title} />
-                  : <div className="featured-visual-placeholder"><span className="featured-placeholder-text">{item.title}</span></div>
-                }
-              </div>
-            </div>
-            <div className="featured-tabs">
-              {FEATURED.map((f, i) => (
-                <button key={f.id} className={`featured-tab ${i === active ? 'active' : ''}`} onClick={() => goTo(i)}>
-                  <div className="featured-tab-name">{f.title}</div>
-                  <div className="featured-tab-sub">{f.subtitle}</div>
-                  <div className="featured-tab-bar" style={{ width: i === active ? `${progress}%` : '0%' }} />
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="featured-cta">
-            <button className="cta-btn cta-btn-primary" onClick={onGoProjects}>Projects →</button>
-            <button className="cta-btn cta-btn-secondary" onClick={onGoCreative}>Creative work →</button>
+        <section className="my-work" ref={ref}>
+          <h2 className="my-work-title">my work</h2>
+          <div className={`my-work-buttons${visible ? ' my-work-buttons--start' : ''}`}>
+            <button className="my-work-btn my-work-btn-projects" onClick={onGoProjects}>projects</button>
+            <button className="my-work-btn my-work-btn-creative" onClick={onGoCreative}>creative</button>
           </div>
         </section>
       );
@@ -1204,7 +1090,7 @@
             <div className="hero-end-spacer" aria-hidden="true" />
             <ManifestoSection />
           </div>
-          <FeaturedWork onOpenProject={setActiveProject} onGoProjects={() => setPage('projects')} onGoCreative={() => setPage('creative')} />
+          <MyWork onGoProjects={() => setPage('projects')} onGoCreative={() => setPage('creative')} />
           <AboutSection />
           <Footer />
           <ProjectOverlay project={activeProject} onClose={() => setActiveProject(null)} />
