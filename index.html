@@ -261,6 +261,50 @@
     .books-scroll img { height: 200px; width: auto; border-radius: 4px; flex-shrink: 0; transition: transform 0.3s; }
     .books-scroll img:hover { transform: scale(1.08) translateY(-4px); }
 
+    /* ── CONTACT ── */
+    .contact-page {
+      min-height: 70vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 140px 32px 80px;
+      max-width: 640px; margin: 0 auto;
+      text-align: center;
+    }
+    .contact-heading {
+      font-family: var(--font-s);
+      font-style: italic; font-weight: 400;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      letter-spacing: -0.005em;
+      color: var(--ink);
+      margin-bottom: 56px;
+    }
+    .contact-list {
+      list-style: none;
+      display: flex; flex-direction: column;
+      gap: 28px;
+      width: 100%; max-width: 460px;
+    }
+    .contact-row {
+      display: flex; flex-direction: column;
+      gap: 8px;
+      text-align: left;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+    .contact-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .contact-value {
+      font-size: 1.05rem;
+      color: var(--ink);
+      transition: color 0.2s;
+      word-break: break-word;
+    }
+    .contact-value:hover { color: var(--accent); }
+
     /* ── FOOTER ── */
     .footer {
       border-top: 1px solid var(--border);
@@ -453,20 +497,6 @@
     // ─── Data ──────────────────────────────────────────────────────────────────
     const PROJECTS = [
       {
-        id: 'hiro', title: 'HIRO',
-        tags: ['full-stack', 'ui/ux', 'health tech'],
-        cardImg: 'imgs/hiro1.png', cardBg: '#dde5ed',
-        timeline: 'Mar 2026 – Present', role: 'Full-Stack · Product & Customer Discovery',
-        externalUrl: 'https://hiro-health.vercel.app/',
-        sections: [
-          { type: 'text', heading: 'The Problem', body: 'Physicians spend up to 2 hours per day on documentation — time that could go toward their patients. Administrative burden is the #1 driver of burnout in medicine. Hiro gives that time back.' },
-          { type: 'text', heading: 'What We\'re Building', body: 'Hiro uses AI to transcribe medical consultations in real time and automatically generate complete SOAP records — in seconds. Physicians focus entirely on the patient while Hiro handles the paperwork. The product integrates with Memed for digital prescriptions and Google Calendar for scheduling, and runs entirely in the browser with no installation required.' },
-          { type: 'text-images', heading: 'Interface', body: 'Dashboard and consultation flows designed for clarity under time pressure — a calm visual language that keeps attention on the patient and the work at hand. The SOAP record is generated with one click, reviewed inline, and exported immediately.', images: ['imgs/hiro.png'] },
-          { type: 'text', heading: 'My Role', body: 'I lead full-stack development and product discovery — conducting interviews with physicians in Brazil, shaping the core workflow, and building the product end-to-end. I also drive the go-to-market strategy targeting Brazilian clinics, where the documentation burden is especially acute.' },
-          { type: 'site-preview', heading: 'Live Product', url: 'https://hiro-health.vercel.app/' }
-        ]
-      },
-      {
         id: 'faca-parte', title: 'FAÇA PARTE',
         tags: ['social impact', 'non-profit'],
         cardImg: 'imgs/facalogo.png', cardBg: '#ede5d8',
@@ -479,6 +509,20 @@
           { type: 'text-images', heading: 'Corporate Partnerships', body: "We partnered with companies like SAP for their 'Bring Your Parents to Work' day, hosting a dedicated Faça Parte technology workshop at their São Paulo office and reaching new audiences through corporate social responsibility initiatives.", images: ['imgs/corp.png', 'imgs/sap.png'] },
           { type: 'side', heading: 'Finalist, SXSW EDU Student Impact Challenge', body: "Selected to pitch at one of the biggest stages for technology and impact innovation in the world. We were the only non-American team selected, making the experience even more special.", image: 'imgs/sxsw.png', news: { source: 'ESTADÃO', headline: 'Brazilian students are among the finalists at the world\'s largest innovation event: SXSW EDU!', link: 'https://www.soseducacao.com.br/post/tem-brasil-no-p%C3%B3dio-estudantes-brasileiros-entre-os-finalistas-no-maior-evento-de-inova%C3%A7%C3%A3o-do-mundo' } },
           { type: 'text-images', heading: 'Brazilian Internet Congress', body: "Invited to speak at the 'Technologies for Social Transformation' panel. It was a privilege to learn more about the initiatives of the other panelists, who are using technology to drive solutions for a better and more equitable Brazil.", images: ['imgs/mic.png', 'imgs/congresso.png'], imgPositions: ['center', 'right center'] }
+        ]
+      },
+      {
+        id: 'hiro', title: 'HIRO',
+        tags: ['full-stack', 'ui/ux', 'health tech'],
+        cardImg: 'imgs/hiro1.png', cardBg: '#dde5ed',
+        timeline: 'Mar 2026 – Present', role: 'Full-Stack · Product & Customer Discovery',
+        externalUrl: 'https://hiro-health.vercel.app/',
+        sections: [
+          { type: 'text', heading: 'The Problem', body: 'Physicians spend up to 2 hours per day on documentation — time that could go toward their patients. Administrative burden is the #1 driver of burnout in medicine. Hiro gives that time back.' },
+          { type: 'text', heading: 'What We\'re Building', body: 'Hiro uses AI to transcribe medical consultations in real time and automatically generate complete SOAP records — in seconds. Physicians focus entirely on the patient while Hiro handles the paperwork. The product integrates with Memed for digital prescriptions and Google Calendar for scheduling, and runs entirely in the browser with no installation required.' },
+          { type: 'text-images', heading: 'Interface', body: 'Dashboard and consultation flows designed for clarity under time pressure — a calm visual language that keeps attention on the patient and the work at hand. The SOAP record is generated with one click, reviewed inline, and exported immediately.', images: ['imgs/hiro.png'] },
+          { type: 'text', heading: 'My Role', body: 'I lead full-stack development and product discovery — conducting interviews with physicians in Brazil, shaping the core workflow, and building the product end-to-end. I also drive the go-to-market strategy targeting Brazilian clinics, where the documentation burden is especially acute.' },
+          { type: 'site-preview', heading: 'Live Product', url: 'https://hiro-health.vercel.app/' }
         ]
       },
       {
@@ -855,6 +899,25 @@
       );
     }
 
+    // ─── Contact Page ───────────────────────────────────────────────────────────
+    function ContactPage() {
+      return (
+        <section className="contact-page">
+          <h1 className="contact-heading">let's connect</h1>
+          <ul className="contact-list">
+            <li className="contact-row">
+              <span className="contact-label">Email</span>
+              <a className="contact-value" href="mailto:abujamra@usc.edu">abujamra@usc.edu</a>
+            </li>
+            <li className="contact-row">
+              <span className="contact-label">LinkedIn</span>
+              <a className="contact-value" href="https://linkedin.com/in/larissa-oliveira2005" target="_blank" rel="noopener">linkedin.com/in/larissa-oliveira2005</a>
+            </li>
+          </ul>
+        </section>
+      );
+    }
+
     // ─── Project Overlay ────────────────────────────────────────────────────────
     function ProjectOverlay({ project, onClose }) {
       const scrollRef = useRef(null);
@@ -1038,7 +1101,7 @@
             <a href="#about-section" onClick={closeMenu}>About</a>
             <a href="#" onClick={e => { e.preventDefault(); closeMenu(); onSetPage && onSetPage('projects'); }}>Projects</a>
             <a href="#" onClick={e => { e.preventDefault(); closeMenu(); onSetPage && onSetPage('creative'); }}>Creative</a>
-            <a href="mailto:abujamra@usc.edu" onClick={closeMenu}>Contact</a>
+            <a href="#" onClick={e => { e.preventDefault(); closeMenu(); onSetPage && onSetPage('contact'); }}>Contact</a>
           </div>
         </nav>
       );
@@ -1079,6 +1142,19 @@
           <div style={{ paddingTop: 80 }}><CreativeSection onOpen={setActiveCreative} /></div>
           <Footer />
           <Lightbox item={activeCreative} onClose={() => setActiveCreative(null)} />
+        </>
+      );
+
+      if (page === 'contact') return (
+        <>
+          <nav className="nav visible nav--inner">
+            <button onClick={() => setPage('home')} className="overlay-back" style={{ background: 'none', border: 'none' }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              Back
+            </button>
+          </nav>
+          <ContactPage />
+          <Footer />
         </>
       );
 
