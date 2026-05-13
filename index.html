@@ -174,6 +174,23 @@
 
     /* ── PROJECTS GRID ── */
     .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 0 48px 80px; max-width: 1200px; margin: 0 auto; }
+    .projects-grid--upper { padding-bottom: 0; }
+    .projects-divider {
+      max-width: 1200px;
+      margin: 56px auto 28px;
+      padding: 0 48px;
+      display: flex; align-items: center; gap: 18px;
+    }
+    .projects-divider::before, .projects-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .projects-divider-label {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    @media (max-width: 768px) {
+      .projects-divider { padding: 0 24px; margin: 40px auto 20px; }
+    }
     .project-card {
       background: var(--surface); cursor: pointer; overflow: hidden;
       border-radius: 4px;
@@ -356,6 +373,37 @@
     .proj-gallery--single img { grid-column: 1 / -1; }
     .proj-feature-img { width: 100%; border-radius: 8px; margin-top: 28px; overflow: hidden; }
     .proj-feature-img img { width: 100%; }
+    .site-preview {
+      position: relative;
+      margin-top: 28px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 12px 40px rgba(22,18,12,0.13);
+    }
+    .site-preview-frame {
+      width: 100%;
+      height: clamp(440px, 70vh, 720px);
+      border: none;
+      display: block;
+      background: var(--surface);
+    }
+    .site-preview-link {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: var(--ink); color: var(--bg);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 9px 18px; border-radius: 100px;
+      text-decoration: none;
+      z-index: 2;
+      box-shadow: 0 4px 14px rgba(22,18,12,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .site-preview-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(22,18,12,0.35);
+    }
     .proj-side { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
     .proj-side img { width: 100%; border-radius: 8px; }
     .news-snippet { margin-top: 20px; padding: 16px; background: var(--surface); border-radius: 8px; border-left: 3px solid var(--accent); }
@@ -551,25 +599,42 @@
         ]
       },
       {
-        id: 'brasa', title: 'BRASA WEBPAGE',
+        id: 'northstar', title: 'NORTHSTAR   ROBOTICS',
+        tags: ['UI/UX', 'web dev', 'robotics'],
+        cardImg: 'imgs/northstar.png', cardBg: '#0b1220',
+        externalUrl: 'https://www.northstarrobotics.ai/',
+        timeline: '2026', role: 'Designer & Developer',
+        category: 'web-dev',
+        sections: [
+          { type: 'text', heading: 'Overview', body: "Designed and developed the new website for Northstar Robotics — a robotics company building autonomous systems. The site balances a clean, technical visual language with clear product storytelling, communicating the company's mission and capabilities to investors, partners, and prospective hires." },
+          { type: 'site-preview', heading: 'Live Site', url: 'https://www.northstarrobotics.ai/' }
+        ]
+      },
+      {
+        id: 'brasa', title: 'BRASA  USC',
         tags: ['UI/UX', 'web dev'],
         cardImg: 'imgs/brasaweb.png', cardBg: '#e0e4ea',
         externalUrl: 'https://brasausc.com',
         timeline: '2025 – Present', role: 'Web Developer · UI/UX',
+        category: 'web-dev',
         sections: [
-          { type: 'text', heading: 'Overview', body: "Designed and coded BRASA USC's webpage using HTML/CSS/JavaScript, improving accessibility and centralizing communication for 100+ members. The project involved full UI design from scratch, with a focus on clarity, mobile responsiveness, and representing the energy of a vibrant Brazilian student community at USC.", link: { label: 'Visit Website ↗', url: 'https://brasausc.com/' } }
+          { type: 'text', heading: 'Overview', body: "Designed and coded BRASA USC's webpage using HTML/CSS/JavaScript, improving accessibility and centralizing communication for 100+ members. The project involved full UI design from scratch, with a focus on clarity, mobile responsiveness, and representing the energy of a vibrant Brazilian student community at USC." },
+          { type: 'site-preview', heading: 'Live Site', url: 'https://brasausc.com/' }
         ]
       },
       {
-        id: 'vanessa-cesconetto', title: 'ESTHETICIAN WEBPAGE',
+        id: 'vanessa-cesconetto', title: 'VANESSA  CESCONETTO',
         tags: ['UI/UX', 'web dev', 'beauty'],
         cardImg: 'imgs/vanessa.png', cardBg: '#ece5dd',
         externalUrl: 'https://vanessacesconetto.com',
         timeline: '2026', role: 'Designer & Developer',
+        category: 'web-dev',
         sections: [
-          { type: 'text', heading: 'Overview', body: "Designed and developed esthetician Vanessa Cesconetto's website with a premium, minimal visual language aligned with her brand. The webpage was built to communicate services clearly, create trust through elegant presentation, and make consultation booking straightforward on both desktop and mobile.", link: { label: 'Visit Website ↗', url: 'https://vanessacesconetto.com' } }
+          { type: 'text', heading: 'Overview', body: "Designed and developed esthetician Vanessa Cesconetto's website with a premium, minimal visual language aligned with her brand. The webpage was built to communicate services clearly, create trust through elegant presentation, and make consultation booking straightforward on both desktop and mobile." },
+          { type: 'site-preview', heading: 'Live Site', url: 'https://vanessacesconetto.com/' }
         ]
-      }
+      },
+      
     ];
 
     // Creative assets: paths must match files in imgs/ exactly (e.g. oilpainting.jpg). Serve over http(s) for consistent behavior.
@@ -650,7 +715,7 @@
       { src: 'imgs/tile-code.png',      label: 'Code' },
       { src: 'imgs/tile-beach.png',     label: 'Beach' },
       { src: 'imgs/tile-books.png',     label: 'Books' },
-      { src: 'imgs/tile-peace.png',     label: 'Peace' },
+      { src: 'imgs/tile-peace.png',     label: 'USC' },
       { src: 'imgs/tile-popcorn.png',   label: 'Movies' },
     ];
 
@@ -735,17 +800,31 @@
     }
 
     function ProjectsSection({ onOpen }) {
+      const main = PROJECTS.filter(p => p.category !== 'web-dev');
+      const webDev = PROJECTS.filter(p => p.category === 'web-dev');
       return (
         <section>
           <div className="section-header">
             <span className="section-label">Selected Work</span>
             <span className="section-count">0{PROJECTS.length} Projects</span>
           </div>
-          <div className="projects-grid">
-            {PROJECTS.map((p, i) => (
+          <div className="projects-grid projects-grid--upper">
+            {main.map((p, i) => (
               <ProjectCard key={p.id} project={p} onClick={() => onOpen(p)} delay={i * 80} />
             ))}
           </div>
+          {webDev.length > 0 && (
+            <>
+              <div className="projects-divider">
+                <span className="projects-divider-label">Web development</span>
+              </div>
+              <div className="projects-grid">
+                {webDev.map((p, i) => (
+                  <ProjectCard key={p.id} project={p} onClick={() => onOpen(p)} delay={i * 80} />
+                ))}
+              </div>
+            </>
+          )}
         </section>
       );
     }
@@ -955,12 +1034,10 @@
                 <div className="proj-feature-img"><img src={sec.image} alt="" /></div>
               )}
               {sec.type === 'site-preview' && sec.url && (
-                <a href={sec.url} target="_blank" rel="noopener" style={{ display: 'block', marginTop: 28, position: 'relative', borderRadius: 10, overflow: 'hidden', boxShadow: '0 12px 40px rgba(22,18,12,0.13)', textDecoration: 'none' }}>
-                  <iframe src={sec.url} style={{ width: '100%', height: 480, border: 'none', display: 'block', pointerEvents: 'none' }} scrolling="no" title="Hiro landing page preview" />
-                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(22,18,12,0.03)', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', padding: 20 }}>
-                    <span style={{ background: 'var(--ink)', color: 'var(--bg)', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '8px 18px', borderRadius: 100 }}>Visit site ↗</span>
-                  </div>
-                </a>
+                <div className="site-preview">
+                  <iframe className="site-preview-frame" src={sec.url} loading="lazy" title={`${sec.heading || 'Site'} preview`} />
+                  <a className="site-preview-link" href={sec.url} target="_blank" rel="noopener">Visit site ↗</a>
+                </div>
               )}
               {sec.type === 'side' && !sec.imageRight && (
                 <div className="proj-side" style={{ marginTop: 28 }}>
