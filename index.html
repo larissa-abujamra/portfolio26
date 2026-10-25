@@ -630,8 +630,39 @@
           { type: 'site-preview', heading: 'Live Site', url: 'https://vanessacesconetto.com/' }
         ]
       },
+      {
+        id: 'habit-tracker', title: 'HABIT  TRACKER', hidden: true,
+        tags: ['UI/UX', 'web dev', 'productivity'],
+        cardImg: 'imgs/splits.png', cardBg: '#131418',
+        externalUrl: 'https://larissaoliveira-inner.github.io/splits/',
+        timeline: '2026', role: 'Designer & Developer',
+        category: 'web-dev',
+        sections: [
+          { type: 'text', heading: 'Overview', body: "Designed and built Splits, a personal habit tracker that treats daily routines like training splits. It tracks seven habits — from sleep and workouts to reading and networking — with live streaks, personal records and a daily score, alongside a tagged task list. Trends, a networking log, milestone-based goals and weekly results turn everyday check-ins into a clear picture of long-term consistency." },
+          { type: 'site-preview', heading: 'Live Site', url: 'https://larissaoliveira-inner.github.io/splits/' }
+        ]
+      },
+      {
+        id: 'tommys-cart', title: "TOMMY'S  CART",
+        tags: ['branding', 'UI/UX', 'web dev'],
+        cardImg: 'imgs/tommys-site.png', cardBg: '#E0261B',
+        externalUrl: 'https://tommyscart.com',
+        timeline: '2026', role: 'Brand Designer & Developer',
+        category: 'web-dev',
+        sections: [
+          { type: 'text', heading: 'Overview', body: "Built the brand and website for Tommy's Cart, a marketplace where USC students buy and sell with people on campus. Sellers list an item in a minute, classmates send offers at, above or below the asking price, and the seller picks who gets it — not the first or the highest, whoever they want — then they meet on campus." },
+          {
+            type: 'text-images', heading: 'Brand Identity',
+            body: "A loud, friendly identity built around a hand-drawn smiley that doubles as the \"o\" in the wordmark. Snake fruit red and saffron lead the palette, softened by pastel pink and light blue, with Bricolage Grotesque for headlines and DM Mono for small details. The tagline, \"have a nice haul.\", carries the tone across the site and social.",
+            link: { label: 'View brand book ↗', url: 'imgs/tommys-brandbook.pdf' },
+            images: ['imgs/tommys-colors.jpg', 'imgs/tommys-type.jpg', 'imgs/tommys-logo.jpg', 'imgs/tommys-social.jpg'],
+            imgRatio: '16 / 9'
+          },
+          { type: 'site-preview', heading: 'Live Site', url: 'https://tommyscart.com/' }
+        ]
+      },
       
-    ];
+    ].filter(p => !p.hidden); // set `hidden: true` on a project to take it off the site without deleting it
 
     // Creative assets: paths must match files in imgs/ exactly (e.g. oilpainting.jpg). Serve over http(s) for consistent behavior.
     // If Safari hides an image Chrome shows: check Web Inspector → Network (404), file format (avoid WebP renamed as .png), and very large PNG decode limits.
@@ -810,7 +841,7 @@
         <section>
           <div className="section-header">
             <span className="section-label">Selected Work</span>
-            <span className="section-count">0{PROJECTS.length} Projects</span>
+            <span className="section-count">{String(PROJECTS.length).padStart(2, '0')} Projects</span>
           </div>
           <div className="projects-grid projects-grid--upper">
             {main.map((p, i) => (
@@ -1040,7 +1071,7 @@
               )}
               {sec.type === 'text-images' && sec.images && (
                 <div className={`proj-gallery ${sec.images.length === 1 ? 'proj-gallery--single' : ''}`}>
-                  {sec.images.map((img, j) => <img key={j} src={img} alt="" style={{ objectPosition: sec.imgPositions?.[j] || 'center' }} />)}
+                  {sec.images.map((img, j) => <img key={j} src={img} alt="" style={{ objectPosition: sec.imgPositions?.[j] || 'center', aspectRatio: sec.imgRatio }} />)}
                 </div>
               )}
               {sec.type === 'feature' && sec.image && (
